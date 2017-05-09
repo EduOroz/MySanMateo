@@ -69,11 +69,14 @@ public class Listado extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    public Fragment fragmentLista;
+    public Fragment fragmentMapa;
+
     //Variables para la conexión a BD
     static EventosSQLite baseDatos;
 
     //Elementos para manejar la Lista de Eventos
-    static ListView listaEventos;
+    public static ListView mylistaEventos;
     static Context myContext;
 
     //Elementos para guardar los eventos que recogemos en el WS
@@ -101,6 +104,9 @@ public class Listado extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        fragmentLista = new FragmentLista();
+        fragmentMapa = new FragmentMapa();
 
         //Creamos un listener para controlar cuando cambiemos de ventana en la actividad
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -131,7 +137,7 @@ public class Listado extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        listaEventos = (ListView) findViewById(R.id.lvListado);
+        //listaEventos = (ListView) findViewById(R.id.lvListado);
         myContext = this;
 
         //Instanciamos la BD
@@ -200,6 +206,7 @@ public class Listado extends AppCompatActivity {
             };
 
             MyVolley.getInstance(this).addToRequestQueue(stringRequest);
+
         }
     }
 
@@ -216,7 +223,7 @@ public class Listado extends AppCompatActivity {
     /**
      * Metodo privado que recupera todos los eventos existentes de la base de datos.
      */
-    static void recuperarEventos() {
+    static void recuperarEventos(ListView listaEventos) {
         try {
             // Devuelve todos los eventos en el objeto Cursor.
             Cursor cursor = baseDatos.obtenerEventos();
@@ -228,6 +235,8 @@ public class Listado extends AppCompatActivity {
             // Setup cursor adapter using cursor from last step
             ListadoCursorAdapter todoAdapter = new ListadoCursorAdapter(myContext, cursor);
             // Attach cursor adapter to the ListView
+            System.out.println("ID de listaEventos en recuperar: " +R.id.lvListado);
+            mylistaEventos = listaEventos;
             listaEventos.setAdapter(todoAdapter);
 
         } catch (Exception e) {
@@ -254,7 +263,7 @@ public class Listado extends AppCompatActivity {
             // Setup cursor adapter using cursor from last step
             ListadoCursorAdapter todoAdapter = new ListadoCursorAdapter(myContext, cursor);
             // Attach cursor adapter to the ListView
-            listaEventos.setAdapter(todoAdapter);
+            mylistaEventos.setAdapter(todoAdapter);
 
         } catch (Exception e) {
             //Toast.makeText(MainActivity.this, "El mensaje de error es: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -284,6 +293,7 @@ public class Listado extends AppCompatActivity {
                 //se oculta el EditText
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
+                searchItem.collapseActionView();
                 //System.out.println("query: " +query);
                 recuperarEventosPorNombre(query);
                 return true;
@@ -350,8 +360,8 @@ public class Listado extends AppCompatActivity {
                 TextView textView = (TextView) rootView.findViewById(R.id.section_label);
                 textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
-                listaEventos = (ListView) rootView.findViewById(R.id.lvListado);
-                recuperarEventos();
+                //listaEventos = (ListView) rootView.findViewById(R.id.lvListado);
+                //recuperarEventos();
 
                 return rootView;
             } else {
@@ -407,8 +417,12 @@ public class Listado extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return Listado.PlaceholderFragment.newInstance(position + 1);
+            if (position==0) {
+                System.out.println("Devolvemos fragmentLista");
+                return fragmentLista;
+            } else {
+                System.out.println("Devolvemos fragmentMapa");
+                return fragmentMapa;}
         }
 
         @Override

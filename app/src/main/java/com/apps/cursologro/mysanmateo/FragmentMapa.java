@@ -20,10 +20,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 
 public class FragmentMapa extends Fragment implements OnMapReadyCallback {
-    /**
-     * The fragment argument representing the section number for this fragment.
-     */
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     private GoogleMap mMap;
 
@@ -34,24 +30,24 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback {
      * Returns a new instance of this fragment for the given section number.
      */
     public static FragmentMapa newInstance(int sectionNumber) {
-        System.out.println("Estamos en newInstance de sectionNumber: " +sectionNumber);
+        System.out.println("Estamos en newInstance de FragmentMapa: " +sectionNumber);
         FragmentMapa fragment = new FragmentMapa();
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-         System.out.println("Estamos en sección : " +getArguments().getInt(ARG_SECTION_NUMBER));
-         View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
-         System.out.println("id mapa: " +R.id.map);
-         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
-                mapFragment.getMapAsync(this);
-         return rootView;
-        }
+        System.out.println("Estamos en onCreateView FragmentMapa");
+        View rootView = inflater.inflate(R.layout.fragment_mapa, container, false);
+        System.out.println("id mapa: " +R.id.map);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        //mapFragment.getMapAsync(this);
+
+
+        return rootView;
+    }
 
     /**
      * Manipulates the map once available.
@@ -76,6 +72,7 @@ public class FragmentMapa extends Fragment implements OnMapReadyCallback {
         LatLng escuelas = new LatLng(42.466640, -2.450672);
         mMap.addMarker(new MarkerOptions().position(escuelas).title("Marcador Escuelas Trevijano"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(escuelas, 13.0f));
+
     }
 
 }
