@@ -66,6 +66,12 @@ public class Listado extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    /**
+     * Creamos este objeto para pasar el array al otro fragmento, lo inicializaremos en onCreate
+     * y luego crearemos un método público que nos devuelva el objeto getObjecto()
+     */
+    public static Listado listado;
+
     public Fragment fragmentLista;
     public Fragment fragmentMapa;
 
@@ -79,6 +85,7 @@ public class Listado extends AppCompatActivity {
     //Elementos para guardar los eventos que recogemos en el WS
     static Evento evento;
     static ArrayList<Evento> eventos = new ArrayList<>();
+    static ArrayList<Evento> eventosBD = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,7 @@ public class Listado extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+        listado = this;
 
 
         // Create the adapter that will return a fragment for each of the primary sections of the activity.
@@ -219,11 +227,23 @@ public class Listado extends AppCompatActivity {
      * Metodo privado que recupera todos los eventos existentes de la base de datos.
      */
     static void recuperarEventos(ListView listaEventos) {
+        String title;
+        String place;
+        eventosBD = new ArrayList<>();
         try {
             // Devuelve todos los eventos en el objeto Cursor.
             Cursor cursor = baseDatos.obtenerEventos();
             System.out.println("numero columnas en el cursor " +cursor.getColumnCount());
-            System.out.println("cursor string 1 " +cursor.getString(1));
+            System.out.println("numero resultados " +cursor.getCount());
+
+            //Recorremos el cursor y guardamos los eventos en evetosBD
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                title = cursor.getString(cursor.getColumnIndex("title"));
+                place = cursor.getString(cursor.getColumnIndex("place"));
+                evento = new Evento(place, 1, title, "String text", "String publication_date", "String link", "String address", 22.02, -2.21, "String start_date", "String finish_date", "String start_time", "String finish_time");
+                eventosBD.add(evento);
+                //System.out.println("En cursor recuperarEventos " +eventosBD.get(0).getTitle());
+            }
 
             // Find ListView to populate -> Variable global listaEventos
 
@@ -247,12 +267,23 @@ public class Listado extends AppCompatActivity {
      * Metodo privado que recupera los eventos de nombre like '%%' existentes de la base de datos.
      */
     static void recuperarEventosPorNombre(String nombre) {
+        String title;
+        String place;
+        eventosBD = new ArrayList<>();
         try {
             // Devuelve todos los eventos en el objeto Cursor.
             Cursor cursor = baseDatos.obtenerEventosPorNombre(nombre);
-            System.out.println("numero columnas en el cursor " +cursor.getColumnCount());
-            System.out.println("cursor string 1 " +cursor.getString(1));
+            System.out.println("REN numero columnas en el cursor " +cursor.getColumnCount());
+            System.out.println("REN numero resultados " +cursor.getCount());
 
+            //Recorremos el cursor y guardamos los eventos en evetosBD
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                title = cursor.getString(cursor.getColumnIndex("title"));
+                place = cursor.getString(cursor.getColumnIndex("place"));
+                evento = new Evento(place, 1, title, "String text", "String publication_date", "String link", "String address", 22.02, -2.21, "String start_date", "String finish_date", "String start_time", "String finish_time");
+                eventosBD.add(evento);
+                //System.out.println("En cursor recuperarEventosPorNombre " +eventosBD.get(0).getTitle());
+            }
             // Find ListView to populate -> Variable global listaEventos
 
             // Setup cursor adapter using cursor from last step
@@ -355,5 +386,9 @@ public class Listado extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public ArrayList<Evento> getObjeto(){
+        return eventosBD;
     }
 }

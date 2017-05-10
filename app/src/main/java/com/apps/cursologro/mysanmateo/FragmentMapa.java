@@ -19,6 +19,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Edu on 09/05/2017.
  */
@@ -27,6 +30,7 @@ public class FragmentMapa extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    public ArrayList<Evento> eventosBD = new ArrayList<>();
 
     public FragmentMapa() {
     }
@@ -66,16 +70,26 @@ public class FragmentMapa extends Fragment {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
+                eventosBD = Listado.listado.getObjeto();
+                System.out.println("Estamos cargando el mapa " +eventosBD.get(0).getTitle());
+
                 // For showing a move to my location button
                 //googleMap.setMyLocationEnabled(true);
 
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+                // Añade un marcador en Ayuntamiento y mueve la camara
+                LatLng logro = new LatLng(42.466676, -2.439315);
+                mMap.addMarker(new MarkerOptions().position(logro).title("Marcador Ayuntamiento de Logroño"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(logro, 13.0f));
 
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                // Añade un marcador en C.C. Berceo y mueve la camara
+                LatLng berceo = new LatLng(42.462826, -2.420469);
+                mMap.addMarker(new MarkerOptions().position(berceo).title("Marcador C.C. Berceo"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(berceo, 13.0f));
+
+                // Añade un marcador en Escuelas Trevijano y mueve la camara
+                LatLng escuelas = new LatLng(42.466640, -2.450672);
+                mMap.addMarker(new MarkerOptions().position(escuelas).title("Marcador Escuelas Trevijano"));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(escuelas, 13.0f));
             }
         });
 
@@ -106,31 +120,5 @@ public class FragmentMapa extends Fragment {
         mMapView.onLowMemory();
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Añade un marcador en Ayuntamiento y mueve la camara
-        LatLng logro = new LatLng(42.466676, -2.439315);
-        mMap.addMarker(new MarkerOptions().position(logro).title("Marcador Ayuntamiento de Logroño"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(logro, 13.0f));
-
-        // Añade un marcador en C.C. Berceo y mueve la camara
-        LatLng berceo = new LatLng(42.462826, -2.420469);
-        mMap.addMarker(new MarkerOptions().position(berceo).title("Marcador C.C. Berceo"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(berceo, 13.0f));
-
-        // Añade un marcador en Escuelas Trevijano y mueve la camara
-        LatLng escuelas = new LatLng(42.466640, -2.450672);
-        mMap.addMarker(new MarkerOptions().position(escuelas).title("Marcador Escuelas Trevijano"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(escuelas, 13.0f));
-
-    }
-    */
 }
 
