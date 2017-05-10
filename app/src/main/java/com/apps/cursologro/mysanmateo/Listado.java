@@ -51,9 +51,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Listado extends AppCompatActivity {
 
-    //Declarado para jugar con el icono de búsqueda
-    TextView textView;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -87,8 +84,6 @@ public class Listado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado);
-
-        textView = (TextView) findViewById(R.id.textView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -289,7 +284,7 @@ public class Listado extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(Listado.this, R.string.submitted, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(Listado.this, R.string.submitted, Toast.LENGTH_SHORT).show();
                 //se oculta el EditText
                 searchView.setQuery("", false);
                 searchView.setIconified(true);
