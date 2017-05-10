@@ -72,8 +72,8 @@ public class Listado extends AppCompatActivity {
      */
     public static Listado listado;
 
-    public Fragment fragmentLista;
-    public Fragment fragmentMapa;
+    public FragmentLista fragmentLista;
+    public FragmentMapa fragmentMapa;
 
     //Variables para la conexión a BD
     static EventosSQLite baseDatos;
@@ -92,14 +92,14 @@ public class Listado extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado);
 
+        listado = this;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-        listado = this;
-
 
         // Create the adapter that will return a fragment for each of the primary sections of the activity.
         mSectionsPagerAdapter = new Listado.SectionsPagerAdapter(getSupportFragmentManager());
@@ -209,7 +209,7 @@ public class Listado extends AppCompatActivity {
             };
 
             MyVolley.getInstance(this).addToRequestQueue(stringRequest);
-
+            recuperarEventos(mylistaEventos);
         }
     }
 
@@ -233,16 +233,26 @@ public class Listado extends AppCompatActivity {
         try {
             // Devuelve todos los eventos en el objeto Cursor.
             Cursor cursor = baseDatos.obtenerEventos();
-            System.out.println("numero columnas en el cursor " +cursor.getColumnCount());
-            System.out.println("numero resultados " +cursor.getCount());
+            System.out.println("RE numero columnas en el cursor " +cursor.getColumnCount());
+            System.out.println("RE numero resultados " +cursor.getCount());
 
             //Recorremos el cursor y guardamos los eventos en evetosBD
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 title = cursor.getString(cursor.getColumnIndex("title"));
                 place = cursor.getString(cursor.getColumnIndex("place"));
-                evento = new Evento(place, 1, title, "String text", "String publication_date", "String link", "String address", 22.02, -2.21, "String start_date", "String finish_date", "String start_time", "String finish_time");
+                evento = new Evento(place, cursor.getInt(cursor.getColumnIndex("thematic_id")),
+                        title, cursor.getString(cursor.getColumnIndex("text")),
+                        cursor.getString(cursor.getColumnIndex("publication_date")),
+                        cursor.getString(cursor.getColumnIndex("link")),
+                        cursor.getString(cursor.getColumnIndex("address")),
+                        cursor.getDouble(cursor.getColumnIndex("lat")),
+                        cursor.getDouble(cursor.getColumnIndex("lng")),
+                        cursor.getString(cursor.getColumnIndex("start_date")),
+                        cursor.getString(cursor.getColumnIndex("finish_date")),
+                        cursor.getString(cursor.getColumnIndex("start_time")),
+                        cursor.getString(cursor.getColumnIndex("finish_time")));
                 eventosBD.add(evento);
-                //System.out.println("En cursor recuperarEventos " +eventosBD.get(0).getTitle());
+                System.out.println("En cursor recuperarEventos " +evento.getTitle() +"lat " +evento.getLat());
             }
 
             // Find ListView to populate -> Variable global listaEventos
@@ -280,9 +290,19 @@ public class Listado extends AppCompatActivity {
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 title = cursor.getString(cursor.getColumnIndex("title"));
                 place = cursor.getString(cursor.getColumnIndex("place"));
-                evento = new Evento(place, 1, title, "String text", "String publication_date", "String link", "String address", 22.02, -2.21, "String start_date", "String finish_date", "String start_time", "String finish_time");
+                evento = new Evento(place, cursor.getInt(cursor.getColumnIndex("thematic_id")),
+                        title, cursor.getString(cursor.getColumnIndex("text")),
+                        cursor.getString(cursor.getColumnIndex("publication_date")),
+                        cursor.getString(cursor.getColumnIndex("link")),
+                        cursor.getString(cursor.getColumnIndex("address")),
+                        cursor.getDouble(cursor.getColumnIndex("lat")),
+                        cursor.getDouble(cursor.getColumnIndex("lng")),
+                        cursor.getString(cursor.getColumnIndex("start_date")),
+                        cursor.getString(cursor.getColumnIndex("finish_date")),
+                        cursor.getString(cursor.getColumnIndex("start_time")),
+                        cursor.getString(cursor.getColumnIndex("finish_time")));
                 eventosBD.add(evento);
-                //System.out.println("En cursor recuperarEventosPorNombre " +eventosBD.get(0).getTitle());
+                System.out.println("En cursor recuperarEventosPorNombre " +evento.getTitle() +"lat " +evento.getLat());
             }
             // Find ListView to populate -> Variable global listaEventos
 
@@ -322,12 +342,14 @@ public class Listado extends AppCompatActivity {
                 searchItem.collapseActionView();
                 //System.out.println("query: " +query);
                 recuperarEventosPorNombre(query);
+                fragmentMapa.recargar();
                 return true;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
                 //textView.setText(newText);
                 recuperarEventosPorNombre(newText);
+                fragmentMapa.recargar();
                 return true;
             }
         });
@@ -369,6 +391,12 @@ public class Listado extends AppCompatActivity {
                 System.out.println("Devolvemos fragmentMapa");
                 return fragmentMapa;}
         }
+
+        /*@Override
+        public int getItemPosition(Object object) {
+            // POSITION_NONE makes it possible to reload the PagerAdapter
+            return POSITION_NONE;
+        }*/
 
         @Override
         public int getCount() {

@@ -28,7 +28,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
     private Context contexto;
 
     // Constante privada
-    private String SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS = "CREATE TABLE if not exists Eventos (_id INTEGER PRIMARY KEY autoincrement, " + "title TEXT, place TEXT)";
+    private String SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS = "CREATE TABLE if not exists Eventos (_id INTEGER PRIMARY KEY autoincrement, " + "title TEXT, place TEXT, thematic_id INTEGER, text TEXT, publication_date TEXT, link TEXT, address TEXT, lat REAL, lng REAL, start_date TEXT, finish_date TEXT, start_time TEXT, finish_time TEXT)";
 
 
     /**
@@ -47,6 +47,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Se ejecuta la sentencia SQL de creación de la tabla Eventos.
+        System.out.println("onCreate de la Base de Datos");
         db.execSQL(SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS);
     }
 
@@ -65,8 +66,19 @@ public class EventosSQLite extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put("title", evento.getTitle());
         valores.put("place", evento.getPlace());
+        valores.put("thematic_id", evento.getThematic_id());
+        valores.put("text", evento.getText());
+        valores.put("publication_date", evento.getPublication_date());
+        valores.put("link", evento.getLink());
+        valores.put("address", evento.getAddress());
+        valores.put("lat", evento.getLat());
+        valores.put("lng", evento.getLng());
+        valores.put("start_date", evento.getStart_date());
+        valores.put("finish_date", evento.getFinish_date());
+        valores.put("start_time", evento.getStart_time());
+        valores.put("finish_time", evento.getFinish_time());
         this.getWritableDatabase().insert("Eventos", null, valores);
-        System.out.println("Se inserta registro " +valores.get("title"));
+        System.out.println("Se inserta registro " +valores.get("title") +"lat " +valores.get("lat") +"lng " +valores.get("lng"));
     }
 
     /**
@@ -81,7 +93,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
      * @return un cursor con todos los eventos
      */
     public Cursor obtenerEventos(){
-        String[] columnas = new String[]{"_id", "title", "place"};
+        String[] columnas = new String[]{"_id", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
         Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, null, null, null, null,columnas[0]+" ASC");
 
         if(cursor != null) {
@@ -95,7 +107,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
      * @return un cursor con todos los eventos
      */
     public Cursor obtenerEventosPorNombre(String nombre){
-        String[] columnas = new String[]{"_id", "title", "place"};
+        String[] columnas = new String[]{"_id", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
         String[] condiciones = new String[]{"%"+nombre+"%"};
         Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, "title like ?", condiciones, null, null,columnas[0]+" ASC");
 

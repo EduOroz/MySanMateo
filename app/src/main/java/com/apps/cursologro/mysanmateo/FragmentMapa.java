@@ -17,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -69,55 +70,81 @@ public class FragmentMapa extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
+                LatLng coords;
+                LatLng center = new LatLng(42.466676, -2.439315);
+
+                //Aplicamos el estilo personalizado de mapa
+                googleMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(
+                                getContext(), R.raw.formato_mapa));
 
                 eventosBD = Listado.listado.getObjeto();
+                if (eventosBD.size()!=0){
                 System.out.println("Estamos cargando el mapa " +eventosBD.get(0).getTitle());
 
                 // For showing a move to my location button
                 //googleMap.setMyLocationEnabled(true);
 
-                // Añade un marcador en Ayuntamiento y mueve la camara
-                LatLng logro = new LatLng(42.466676, -2.439315);
-                mMap.addMarker(new MarkerOptions().position(logro).title("Marcador Ayuntamiento de Logroño"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(logro, 13.0f));
+                for (Evento evento : eventosBD){
+                    coords = new LatLng(evento.getLat(), evento.getLng());
+                    mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
 
-                // Añade un marcador en C.C. Berceo y mueve la camara
-                LatLng berceo = new LatLng(42.462826, -2.420469);
-                mMap.addMarker(new MarkerOptions().position(berceo).title("Marcador C.C. Berceo"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(berceo, 13.0f));
-
-                // Añade un marcador en Escuelas Trevijano y mueve la camara
-                LatLng escuelas = new LatLng(42.466640, -2.450672);
-                mMap.addMarker(new MarkerOptions().position(escuelas).title("Marcador Escuelas Trevijano"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(escuelas, 13.0f));
+                }}
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 13.0f));
             }
         });
 
         return rootView;
     }
 
+    public void recargar(){
+        googleMap.clear();
+        GoogleMap mMap = googleMap;
+        LatLng coords = new LatLng(42.466676, -2.439315);
+
+        //Aplicamos el estilo personalizado de mapa
+        googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        getContext(), R.raw.formato_mapa));
+
+        eventosBD = Listado.listado.getObjeto();
+        System.out.println("Estamos recargando el mapa con " +eventosBD.size());
+
+        for (Evento evento : eventosBD){
+            coords = new LatLng(evento.getLat(), evento.getLng());
+            mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
+
+        }
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13.0f));
+
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        System.out.println("Estamos en FragmentMapa onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+        System.out.println("Estamos en FragmentMapa onPause");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        System.out.println("Estamos en FragmentMapa onDestroy");
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+        System.out.println("Estamos en FragmentMapa onLowMemory");
     }
 
 }
