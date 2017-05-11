@@ -109,8 +109,7 @@
 		android:id="@+id/ivWeb"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignEnd="@+id/vLinea"
-		android:layout_alignRight="@+id/vLinea"
+		android:layout_toStartOf="@+id/ivLocalizacion"
 		android:layout_below="@+id/vLinea"
 		android:layout_marginRight="10dp"
 		android:layout_marginTop="10dp"
@@ -120,10 +119,12 @@
 		android:id="@+id/ivLocalizacion"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignBottom="@+id/ivWeb"
+		android:layout_below="@+id/vLinea"
 		android:layout_marginRight="10dp"
-		android:layout_toLeftOf="@+id/ivWeb"
-		android:layout_toStartOf="@+id/ivWeb"
+		android:layout_marginTop="10dp"
+		android:layout_alignEnd="@+id/vLinea"
+		android:layout_alignRight="@+id/vLinea"
+
 		app:srcCompat="@drawable/location_button" />
 
 </RelativeLayout>
