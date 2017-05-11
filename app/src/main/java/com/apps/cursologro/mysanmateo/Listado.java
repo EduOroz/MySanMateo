@@ -73,7 +73,7 @@ public class Listado extends AppCompatActivity {
     public static Listado listado;
 
     public FragmentLista fragmentLista;
-    public FragmentMapa fragmentMapa;
+    public static FragmentMapa fragmentMapa;
 
     //Variables para la conexión a BD
     static EventosSQLite baseDatos;
@@ -172,7 +172,7 @@ public class Listado extends AppCompatActivity {
                                         JSONObject jobject = jarray.getJSONObject(i);
                                         System.out.println("objeto " +i +" id es: " +jobject.get("id"));
                                         JSONArray jarray_horario=(JSONArray) jobject.get("schedules");
-                                        evento = new Evento (jobject.getString("place"), jobject.getInt("thematic_id"), jobject.getString("title"), jobject.getString("text"), jobject.getString("publication_date"), jobject.getString("link"), jobject.getString("address"), jobject.getDouble("lat"), jobject.getDouble("lng"), jarray_horario.getJSONObject(0).getString("start_date"), jarray_horario.getJSONObject(0).getString("finish_date"), jarray_horario.getJSONObject(0).getString("start_time"), jarray_horario.getJSONObject(0).getString("finish_time"));
+                                        evento = new Evento (jobject.getInt("id"), jobject.getString("place"), jobject.getInt("thematic_id"), jobject.getString("title"), jobject.getString("text"), jobject.getString("publication_date"), jobject.getString("link"), jobject.getString("address"), jobject.getDouble("lat"), jobject.getDouble("lng"), jarray_horario.getJSONObject(0).getString("start_date"), jarray_horario.getJSONObject(0).getString("finish_date"), jarray_horario.getJSONObject(0).getString("start_time"), jarray_horario.getJSONObject(0).getString("finish_time"));
                                         System.out.println("evento place: " +evento.getPlace());
                                         eventos.add(evento);
 
@@ -240,7 +240,9 @@ public class Listado extends AppCompatActivity {
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 title = cursor.getString(cursor.getColumnIndex("title"));
                 place = cursor.getString(cursor.getColumnIndex("place"));
-                evento = new Evento(place, cursor.getInt(cursor.getColumnIndex("thematic_id")),
+                evento = new Evento(cursor.getInt(cursor.getColumnIndex("id_evento")),
+                        place,
+                        cursor.getInt(cursor.getColumnIndex("thematic_id")),
                         title, cursor.getString(cursor.getColumnIndex("text")),
                         cursor.getString(cursor.getColumnIndex("publication_date")),
                         cursor.getString(cursor.getColumnIndex("link")),
@@ -290,7 +292,8 @@ public class Listado extends AppCompatActivity {
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 title = cursor.getString(cursor.getColumnIndex("title"));
                 place = cursor.getString(cursor.getColumnIndex("place"));
-                evento = new Evento(place, cursor.getInt(cursor.getColumnIndex("thematic_id")),
+                evento = new Evento(cursor.getInt(cursor.getColumnIndex("id_evento")),
+                        place, cursor.getInt(cursor.getColumnIndex("thematic_id")),
                         title, cursor.getString(cursor.getColumnIndex("text")),
                         cursor.getString(cursor.getColumnIndex("publication_date")),
                         cursor.getString(cursor.getColumnIndex("link")),
@@ -419,4 +422,8 @@ public class Listado extends AppCompatActivity {
     public ArrayList<Evento> getObjeto(){
         return eventosBD;
     }
+    public void cambiarMapa(){
+        mViewPager.setCurrentItem(1);
+    }
+
 }

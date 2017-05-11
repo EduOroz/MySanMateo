@@ -1,6 +1,8 @@
 package com.apps.cursologro.mysanmateo;
 
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Edu on 08/05/2017.
@@ -42,12 +45,14 @@ public class ListadoCursorAdapter extends CursorAdapter {
         TextView tvAddress = (TextView) view.findViewById(R.id.tvDireccion);
         TextView tvThematic = (TextView) view.findViewById(R.id.tvCategoria);
         ImageView ivWeb = (ImageView) view.findViewById(R.id.ivWeb);
+        ImageView ivLocalizacion = (ImageView) view.findViewById(R.id.ivLocalizacion);
 
         // Configuramos los estilos de los text fields
         Typeface faceLBold= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Bold.ttf");
         tvDay.setTypeface(faceLBold);
 
         // Extract properties from cursor
+        final Integer id_evento = cursor.getInt(cursor.getColumnIndexOrThrow("id_evento"));
         String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
         String place = cursor.getString(cursor.getColumnIndexOrThrow("place"));
         String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
@@ -97,6 +102,15 @@ public class ListadoCursorAdapter extends CursorAdapter {
         else {
             tvHour.setText(start_time +" - " +finish_time);
         }
+
+        //Creamos un listener en el ivLocalización
+        ivLocalizacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Listado.fragmentMapa.mostrarEtiqueta(id_evento);
+               Listado.listado.cambiarMapa();
+            }
+        });
 
     }
 }

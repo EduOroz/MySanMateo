@@ -5,6 +5,7 @@ package com.apps.cursologro.mysanmateo;
  */
 
 public class Evento {
+    private Integer id;
     private String place;
     private Integer thematic_id;
     private String title;
@@ -22,7 +23,8 @@ public class Evento {
     //Constructores
     public Evento(){}
 
-    public Evento(String place, Integer thematic_id, String title, String text, String publication_date, String link, String address, Double lat, Double lng, String start_date, String finish_date, String start_time, String finish_time) {
+    public Evento(Integer id, String place, Integer thematic_id, String title, String text, String publication_date, String link, String address, Double lat, Double lng, String start_date, String finish_date, String start_time, String finish_time) {
+        this.id = id;
         this.place = place;
         this.thematic_id = thematic_id;
         this.title = title;
@@ -39,6 +41,14 @@ public class Evento {
     }
 
     //Getters and Setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setPlace(Integer id) {
+        this.id = id;
+    }
+
     public String getPlace() {
         return place;
     }

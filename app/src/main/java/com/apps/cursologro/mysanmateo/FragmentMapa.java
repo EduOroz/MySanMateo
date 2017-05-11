@@ -119,6 +119,25 @@ public class FragmentMapa extends Fragment {
 
     }
 
+    public void mostrarEtiqueta(Integer id_evento){
+        System.out.println("Intentamos mostrar la etiqueta del evento " +id_evento);
+        GoogleMap mMap = googleMap;
+        eventosBD = Listado.listado.getObjeto();
+        LatLng coords = new LatLng(42.466676, -2.439315);
+
+        for (Evento evento : eventosBD){
+            coords = new LatLng(evento.getLat(), evento.getLng());
+            //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento);
+            if (evento.getId().equals(id_evento)){
+                //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
+                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle())).showInfoWindow();
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 16.0f));
+            } else {
+                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
+            }
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
