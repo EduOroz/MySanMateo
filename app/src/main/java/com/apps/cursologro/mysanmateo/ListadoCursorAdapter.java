@@ -75,7 +75,7 @@ public class ListadoCursorAdapter extends CursorAdapter {
 
         //El icono de la url sólo se visualizará si hay campo url
         if (link.equals("")){
-            ivWeb.setVisibility(View.INVISIBLE);
+            ivWeb.setVisibility(View.GONE);
         } else {
             ivWeb.setVisibility(View.VISIBLE);
         }
