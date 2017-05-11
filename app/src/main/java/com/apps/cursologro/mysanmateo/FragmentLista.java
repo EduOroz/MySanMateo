@@ -1,5 +1,6 @@
 package com.apps.cursologro.mysanmateo;
 
+import android.graphics.drawable.PaintDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,10 +37,11 @@ public class FragmentLista extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         System.out.println("Estamos en onCreateView FragmentLista");
         View rootView = inflater.inflate(R.layout.fragment_listado, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText("Hello from FragmentLista");
+        //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+        //textView.setText("Hello from FragmentLista");
 
         ListView listaEventos = (ListView) rootView.findViewById(R.id.lvListado);
+        listaEventos.setDividerHeight(40);
         recuperarEventos(listaEventos);
         return rootView;
     }

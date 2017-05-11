@@ -94,7 +94,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
      */
     public Cursor obtenerEventos(){
         String[] columnas = new String[]{"_id", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
-        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, null, null, null, null,columnas[0]+" ASC");
+        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, null, null, null, null,columnas[10]+" ASC");
 
         if(cursor != null) {
             cursor.moveToFirst();
@@ -109,7 +109,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
     public Cursor obtenerEventosPorNombre(String nombre){
         String[] columnas = new String[]{"_id", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
         String[] condiciones = new String[]{"%"+nombre+"%"};
-        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, "title like ?", condiciones, null, null,columnas[0]+" ASC");
+        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, "title like ?", condiciones, null, null,columnas[10]+" ASC");
 
         if(cursor != null) {
             cursor.moveToFirst();
