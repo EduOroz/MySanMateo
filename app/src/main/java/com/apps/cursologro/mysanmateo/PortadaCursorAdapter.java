@@ -57,7 +57,7 @@ public class PortadaCursorAdapter extends CursorAdapter {
         // Populate fields with extracted properties
         tvTituloPortada.setText(title);
         tvSubtituloPortada.setText(subtitle);
-        tvNumero.setText(""+num);
+        tvNumero.setText(" "+num +" ");
 
         //Creamos un listener en el ibAListado
         ibAListado.setOnClickListener(new View.OnClickListener() {

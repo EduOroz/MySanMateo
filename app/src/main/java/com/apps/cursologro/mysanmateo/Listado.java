@@ -2,6 +2,7 @@ package com.apps.cursologro.mysanmateo;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -91,6 +92,9 @@ public class Listado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado);
+
+        //Nos traemos la base de Datos abierta en MainActivty
+        baseDatos = MainActivity.main.getDB();
 
         listado = this;
 
@@ -194,7 +198,7 @@ public class Listado extends AppCompatActivity {
             System.out.println("El mensaje de error es: " + e.getMessage());
         } finally {
             // Se cierra la base de datos.
-            baseDatos.cerrar();
+            //baseDatos.cerrar();
         }
     }
 
@@ -242,7 +246,7 @@ public class Listado extends AppCompatActivity {
             System.out.println("El mensaje de error es: " + e.getMessage());
         } finally {
             // Se cierra la base de datos.
-            baseDatos.cerrar();
+            //baseDatos.cerrar();
         }
     }
 

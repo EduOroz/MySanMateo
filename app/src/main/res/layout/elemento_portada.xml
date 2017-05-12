@@ -17,7 +17,7 @@
 		android:paddingLeft="10dp"
 		android:text="tvTitulo"
 		android:textColor="@color/colorAccent"
-		android:textSize="30dp" />
+		android:textSize="20sp" />
 
 	<TextView
 		android:id="@+id/tvSubtituloPortada"
@@ -29,40 +29,36 @@
 		android:paddingLeft="10dp"
 		android:text="tvSubtitulo"
 		android:textColor="@color/colorAccent"
-		android:textSize="21dp" />
+		android:textSize="14sp" />
 
-	<View
-		android:id="@+id/vLinea"
-		android:layout_width="wrap_content"
-		android:layout_height="2dp"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:layout_below="@+id/tvSubtituloPortada"
-		android:layout_marginTop="10dp"
-		android:background="@color/common_google_signin_btn_text_light_disabled"
-		android:orientation="horizontal" />
-
-	<ImageButton
-		android:id="@+id/ibAListado"
+	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:background="@color/colorWhite"
-		app:srcCompat="@drawable/right"
 		android:layout_above="@+id/tvSubtituloPortada"
-		android:layout_alignParentEnd="true" />
-
-	<TextView
-		android:id="@+id/tvNumero"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignBottom="@+id/ibAListado"
+		android:layout_alignParentEnd="true"
 		android:layout_marginRight="10dp"
-		android:layout_toStartOf="@+id/ibAListado"
-		android:background="@drawable/rounded_corner"
-		android:textAlignment="center"
-		android:paddingTop="10dp"
-		android:text="120"
-		android:textColor="@color/colorWhite"
-		android:textSize="15sp" />
+		android:orientation="horizontal">
+
+		<TextView
+			android:id="@+id/tvNumero"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/rounded_corner"
+			android:text=" 120 "
+			android:textAlignment="center"
+			android:textColor="@color/colorWhite"
+			android:textSize="16sp" />
+
+		<ImageButton
+			android:id="@+id/ibAListado"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/colorWhite"
+			app:srcCompat="@drawable/right"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="4dp"/>
+
+
+	</LinearLayout>
 
 </RelativeLayout>

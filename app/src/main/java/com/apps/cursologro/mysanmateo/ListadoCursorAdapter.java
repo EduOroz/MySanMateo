@@ -20,6 +20,7 @@ import android.widget.Toast;
 public class ListadoCursorAdapter extends CursorAdapter {
     public ListadoCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
+        System.out.println("Creando ListadoCursorAdapter");
     }
 
     // The newView method is used to inflate a new view and return it,

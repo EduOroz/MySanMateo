@@ -183,7 +183,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
      */
     public Cursor obtenerEventosEspeciales(){
         System.out.println("Recuperando los Eventos Especiales");
-        String[] columnas = new String[]{"titulo", "subtitulo", "cantidad"};
+        String[] columnas = new String[]{"_id", "titulo", "subtitulo", "cantidad"};
         Cursor cursor = this.getReadableDatabase().query("EventosEspeciales", columnas, null, null, null, null,columnas[0]+" ASC");
 
         if(cursor != null) {

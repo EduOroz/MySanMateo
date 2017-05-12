@@ -3,6 +3,7 @@ package com.apps.cursologro.mysanmateo;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,13 +32,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView list;
-    private String[] programa = {"PROGRAMA DE SAN MATEOS COMPLETO", "PROGRAMA INFANTIL"};
-
     public static MainActivity main;
 
     //Variables para la conexión a BD
-    static EventosSQLite baseDatos;
+    public EventosSQLite baseDatos;
 
     //Elementos para guardar los eventos que recogemos en el WS y los eventos padre
     static EventoPadre eventoPadre;
@@ -183,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //recuperarEventosEspeciales();
-        moveToListado();
+        recuperarEventosEspeciales();
+        //moveToListado();
         super.onResume();
     }
 
@@ -223,8 +221,6 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println("Tras crear eventosPadre cargamos el adaptador");
             // Find ListView to populate -> Variable global listaEventos
-            cursor.moveToFirst();
-            System.out.println("Elemento del cursor titulo tras for " +cursor.getString(cursor.getColumnIndex("titulo")));
 
             // Setup cursor adapter using cursor from last step
             PortadaCursorAdapter portadaAdapter = new PortadaCursorAdapter(this, cursor);
@@ -235,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             System.out.println("El mensaje de error es: " + e.getMessage());
         } finally {
             // Se cierra la base de datos.
-            baseDatos.cerrar();
+            //baseDatos.cerrar();
         }
     }
 
@@ -243,4 +239,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getBaseContext(), Listado.class);
         startActivity(intent);
     }
+
+    public EventosSQLite getDB (){
+        return baseDatos;
+    }
+
 }
