@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/portada"
         android:id="@+id/san_mateo"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
