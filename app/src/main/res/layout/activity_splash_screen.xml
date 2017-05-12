@@ -15,10 +15,20 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold" />
 
-    <pl.droidsonroids.gif.GifImageView
+    <com.felipecsl.gifimageview.library.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_marginTop="-30dp"
+        android:scaleType="fitCenter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/portada"
-        />
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:background ="@drawable/mipbstyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
