@@ -75,12 +75,12 @@ public class Listado extends AppCompatActivity {
     public FragmentLista fragmentLista;
     public static FragmentMapa fragmentMapa;
 
-    //Variables para la conexión a BD
-    static EventosSQLite baseDatos;
-
     //Elementos para manejar la Lista de Eventos
     public static ListView mylistaEventos;
     static Context myContext;
+
+    //Variables para la conexión a BD
+    static EventosSQLite baseDatos;
 
     //Elementos para guardar los eventos que recogemos en el WS
     static Evento evento;
@@ -140,137 +140,9 @@ public class Listado extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //listaEventos = (ListView) findViewById(R.id.lvListado);
         myContext = this;
 
-        //Instanciamos la BD
-        baseDatos = new EventosSQLite(this);
 
-        //Revisamos Si existe el archivo SQLite, si no lo creamos
-        if(existeBD("DBEventos")){
-            //
-            System.out.println("La Base de Datos existe");
-        }
-        else {
-            System.out.println("La Base de Datos no existe");
-
-            //Realizamos una consulta al web service para traernos la información de los eventos a mostrar
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, " https://testgestorlogrono.get-app.es/api/events",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            //Log.d("URL_CHECK_ENABLE_FORM", "Response:"+response);
-                            System.out.println("Respuesta: " +response);
-                            //ArrayList<Evento> p = new ArrayList<>();
-                            try{
-                                //creamos un array JSON a partir de la cadena recibida
-                                JSONObject jobj = new JSONObject(response);
-                                if (jobj!=null){
-                                /*p = new Gson().fromJson(jarray.toString(), new TypeToken<List<Evento>>(){}.getType());*/
-                                    JSONArray jarray=(JSONArray) jobj.get("modified");
-                                    for (int i=0;i<jarray.length();i++){
-                                        JSONObject jobject = jarray.getJSONObject(i);
-                                        System.out.println("objeto " +i +" id es: " +jobject.get("id"));
-                                        JSONArray jarray_horario=(JSONArray) jobject.get("schedules");
-                                        evento = new Evento (jobject.getInt("id"), jobject.getString("place"), jobject.getInt("thematic_id"), jobject.getString("title"), jobject.getString("text"), jobject.getString("publication_date"), jobject.getString("link"), jobject.getString("address"), jobject.getDouble("lat"), jobject.getDouble("lng"), jarray_horario.getJSONObject(0).getString("start_date"), jarray_horario.getJSONObject(0).getString("finish_date"), jarray_horario.getJSONObject(0).getString("start_time"), jarray_horario.getJSONObject(0).getString("finish_time"));
-                                        System.out.println("evento place: " +evento.getPlace());
-                                        eventos.add(evento);
-
-                                        //insertamos en baseDatos
-                                        baseDatos.insertarEvento(evento);
-                                    }
-                                    System.out.println("eventos 0 place: " +eventos.get(0).getPlace());
-
-                                }
-                            }
-                            catch(JSONException ex){
-                                ex.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-                /*@Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("Accept", "application/json");
-                    return params;
-                }*/
-                @Override
-                public Map getHeaders() throws AuthFailureError {
-                    Map headers = new HashMap<>();
-                    headers.put("Accept", "application/json");
-                    return headers;
-                }
-            };
-
-            MyVolley.getInstance(this).addToRequestQueue(stringRequest);
-
-            //Realizamos una consulta al web service para traernos la información de las categorías
-            stringRequest = new StringRequest(Request.Method.GET, "https://testgestorlogrono.get-app.es/api/thematics",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            //Log.d("URL_CHECK_ENABLE_FORM", "Response:"+response);
-                            System.out.println("Respuesta categoría: " +response);
-                            //ArrayList<Evento> p = new ArrayList<>();
-                            try{
-                                //creamos un array JSON a partir de la cadena recibida
-                                JSONObject jobj = new JSONObject(response);
-                                if (jobj!=null){
-                                /*p = new Gson().fromJson(jarray.toString(), new TypeToken<List<Evento>>(){}.getType());*/
-                                    JSONArray jarray=(JSONArray) jobj.get("modified");
-                                    for (int i=0;i<jarray.length();i++){
-                                        JSONObject jobject = jarray.getJSONObject(i);
-                                        System.out.println("objeto categoria " +i +" id es: " +jobject.get("id"));
-                                        //insertamos en baseDatos
-                                        baseDatos.insertarCategoria(jobject.getInt("id"), jobject.getString("title"));
-                                    }
-                                }
-                            }
-                            catch(JSONException ex){
-                                ex.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }) {
-                /*@Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("Accept", "application/json");
-                    return params;
-                }*/
-                @Override
-                public Map getHeaders() throws AuthFailureError {
-                    Map headers = new HashMap<>();
-                    headers.put("Accept", "application/json");
-                    return headers;
-                }
-            };
-
-            MyVolley.getInstance(this).addToRequestQueue(stringRequest);
-
-            recuperarEventos(mylistaEventos);
-        }
-    }
-
-    /**
-     * Permite comprobar si existe la base de datos
-     * @param dbName Nombre de la base de datos
-     * @return si existe la base de datos
-     */
-    private boolean existeBD(String dbName) {
-        File dbFile = getApplicationContext().getDatabasePath(dbName);
-        return dbFile.exists();
     }
 
     /**
@@ -488,6 +360,9 @@ public class Listado extends AppCompatActivity {
     }
     public void cambiarMapa(){
         mViewPager.setCurrentItem(1);
+    }
+    public void cambiarListado(){
+        mViewPager.setCurrentItem(0);
     }
 
 }

@@ -30,6 +30,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
     // Constante privada
     private String SENTENCIA_SQL_CREAR_TABLA_EVENTOS = "CREATE TABLE if not exists Eventos (_id INTEGER PRIMARY KEY autoincrement, " + "id_evento INTEGER, title TEXT, place TEXT, thematic_id INTEGER, text TEXT, publication_date TEXT, link TEXT, address TEXT, lat REAL, lng REAL, start_date TEXT, finish_date TEXT, start_time TEXT, finish_time TEXT)";
     private String SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS = "CREATE TABLE if not exists Categorias (_idcat INTEGER PRIMARY KEY autoincrement, " + "id_categoria INTEGER, title_categoria TEXT)";
+    private String SENTENCIA_SQL_CREAR_TABLA_EVENTOS_ESPECIALES = "CREATE TABLE if not exists EventosEspeciales (_id INTEGER PRIMARY KEY autoincrement, " + "titulo TEXT, subtitulo TEXT, cantidad INTEGER)";
 
     /**
      * Constructor
@@ -46,21 +47,24 @@ public class EventosSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Se ejecuta la sentencia SQL de creación de la tabla Eventos.
+        // Se ejecuta la sentencia SQL de creación de las tablas
         System.out.println("onCreate de la Base de Datos");
         db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS);
         db.execSQL(SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS);
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS_ESPECIALES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Se elimina la versión anterior de la tabla Eventos y de Categoria.
+        // Se elimina la versión anterior de las tablas
         db.execSQL("DROP TABLE IF EXISTS Eventos");
         db.execSQL("DROP TABLE IF EXISTS Categorias");
+        db.execSQL("DROP TABLE IF EXISTS EventosEspeciales");
 
-        // Se crea la nueva versión de la tabla EVENTOS y CATEGORIA.
+        // Se crea la nueva versión de las tablas
         db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS);
         db.execSQL(SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS);
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS_ESPECIALES);
     }
     /**
      * Metodo publico para insertar una nuevo evento.
@@ -94,6 +98,18 @@ public class EventosSQLite extends SQLiteOpenHelper {
         valores.put("title_categoria", titulo);
         this.getWritableDatabase().insert("Categorias", null, valores);
         System.out.println("Se inserta registro id " +id_categoria  +" title " +titulo);
+    }
+
+    /**
+     * Metodo publico para insertar eventos especiales
+     */
+    public void insertarEventosEspeciales(String titulo, String subtitulo, Integer cantidad){
+        ContentValues valores = new ContentValues();
+        valores.put("titulo", titulo);
+        valores.put("subtitulo", subtitulo);
+        valores.put("cantidad", cantidad);
+        this.getWritableDatabase().insert("EventosEspeciales", null, valores);
+        System.out.println("Se inserta evento especial " +titulo  +" cantidad " +cantidad);
     }
 
     /**
@@ -154,6 +170,21 @@ public class EventosSQLite extends SQLiteOpenHelper {
         String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
         String[] condiciones = new String[]{"%"+nombre+"%", "%"+nombre+"%"};
         Cursor cursor = this.getReadableDatabase().query("Eventos, Categorias", columnas, "thematic_id=id_categoria and thematic_id=134 and (title like ? or place like ?) ", condiciones, null, null,columnas[11]+" ASC");
+
+        if(cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    /**
+     * Metodo publico que devuelve todas los eventos especiales
+     * @return un cursor con todos los eventos
+     */
+    public Cursor obtenerEventosEspeciales(){
+        System.out.println("Recuperando los Eventos Especiales");
+        String[] columnas = new String[]{"titulo", "subtitulo", "cantidad"};
+        Cursor cursor = this.getReadableDatabase().query("EventosEspeciales", columnas, null, null, null, null,columnas[0]+" ASC");
 
         if(cursor != null) {
             cursor.moveToFirst();
