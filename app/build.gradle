@@ -30,4 +30,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.google.android.gms:play-services-maps:10.2.4'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.felipecsl:gifimageview:2.1.0'
+    compile 'commons-io:commons-io:2.4'
 }
