@@ -56,7 +56,8 @@ public class ListadoCursorAdapter extends CursorAdapter {
         String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
         String place = cursor.getString(cursor.getColumnIndexOrThrow("place"));
         String address = cursor.getString(cursor.getColumnIndexOrThrow("address"));
-        Integer idThematic = cursor.getInt(cursor.getColumnIndexOrThrow("thematic_id"));
+        //Integer idThematic = cursor.getInt(cursor.getColumnIndexOrThrow("thematic_id"));
+        String titulo_categoria = cursor.getString(cursor.getColumnIndexOrThrow("title_categoria"));
         String start_date = cursor.getString(cursor.getColumnIndexOrThrow("start_date"));
         String start_time = cursor.getString(cursor.getColumnIndexOrThrow("start_time"));
         String finish_time = cursor.getString(cursor.getColumnIndexOrThrow("finish_time"));
@@ -76,7 +77,8 @@ public class ListadoCursorAdapter extends CursorAdapter {
         tvTitle.setText(title);
         tvPlace.setText(place);
         tvAddress.setText(address);
-        tvThematic.setText(""+idThematic);
+        //tvThematic.setText(""+idThematic);
+        tvThematic.setText(titulo_categoria);
 
         //El icono de la url sólo se visualizará si hay campo url
         if (link.equals("")){

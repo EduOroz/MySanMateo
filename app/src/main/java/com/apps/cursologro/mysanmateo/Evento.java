@@ -19,6 +19,7 @@ public class Evento {
     private String finish_date;
     private String start_time;
     private String finish_time;
+    private String titulo_categoria;
 
     //Constructores
     public Evento(){}
@@ -38,6 +39,25 @@ public class Evento {
         this.finish_date = finish_date;
         this.start_time = start_time;
         this.finish_time = finish_time;
+        this.titulo_categoria = "none";
+    }
+
+    public Evento(Integer id, String place, Integer thematic_id, String title, String text, String publication_date, String link, String address, Double lat, Double lng, String start_date, String finish_date, String start_time, String finish_time, String titulo_categoria) {
+        this.id = id;
+        this.place = place;
+        this.thematic_id = thematic_id;
+        this.title = title;
+        this.text = text;
+        this.publication_date = publication_date;
+        this.link = link;
+        this.address = address;
+        this.lat = lat;
+        this.lng = lng;
+        this.start_date = start_date;
+        this.finish_date = finish_date;
+        this.start_time = start_time;
+        this.finish_time = finish_time;
+        this.titulo_categoria = titulo_categoria;
     }
 
     //Getters and Setters
@@ -151,5 +171,13 @@ public class Evento {
 
     public void setFinish_time(String finish_time) {
         this.finish_time = finish_time;
+    }
+
+    public String getTitulo_categoria() {
+        return titulo_categoria;
+    }
+
+    public void setTitulo_categoria(String titulo_categoria) {
+        this.titulo_categoria = titulo_categoria;
     }
 }

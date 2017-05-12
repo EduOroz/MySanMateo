@@ -20,7 +20,8 @@
 		android:textColor="@color/colorWhite"
 		android:padding="5dp"
 		android:text="tvDia"
-		android:textSize="18dp" />
+		android:textSize="18dp"
+        android:textAlignment="center"/>
 
 	<TextView
 		android:id="@+id/tvHora"

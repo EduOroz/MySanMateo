@@ -28,8 +28,8 @@ public class EventosSQLite extends SQLiteOpenHelper {
     private Context contexto;
 
     // Constante privada
-    private String SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS = "CREATE TABLE if not exists Eventos (_id INTEGER PRIMARY KEY autoincrement, " + "id_evento INTEGER, title TEXT, place TEXT, thematic_id INTEGER, text TEXT, publication_date TEXT, link TEXT, address TEXT, lat REAL, lng REAL, start_date TEXT, finish_date TEXT, start_time TEXT, finish_time TEXT)";
-
+    private String SENTENCIA_SQL_CREAR_TABLA_EVENTOS = "CREATE TABLE if not exists Eventos (_id INTEGER PRIMARY KEY autoincrement, " + "id_evento INTEGER, title TEXT, place TEXT, thematic_id INTEGER, text TEXT, publication_date TEXT, link TEXT, address TEXT, lat REAL, lng REAL, start_date TEXT, finish_date TEXT, start_time TEXT, finish_time TEXT)";
+    private String SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS = "CREATE TABLE if not exists Categorias (_idcat INTEGER PRIMARY KEY autoincrement, " + "id_categoria INTEGER, title_categoria TEXT)";
 
     /**
      * Constructor
@@ -48,16 +48,19 @@ public class EventosSQLite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Se ejecuta la sentencia SQL de creación de la tabla Eventos.
         System.out.println("onCreate de la Base de Datos");
-        db.execSQL(SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS);
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS);
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Se elimina la versión anterior de la tabla Eventos.
+        // Se elimina la versión anterior de la tabla Eventos y de Categoria.
         db.execSQL("DROP TABLE IF EXISTS Eventos");
+        db.execSQL("DROP TABLE IF EXISTS Categorias");
 
-        // Se crea la nueva versión de la tabla EVENTOS.
-        db.execSQL(SENTENCIA_SQL_CREAR_BASE_DATOS_EVENTOS);
+        // Se crea la nueva versión de la tabla EVENTOS y CATEGORIA.
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_EVENTOS);
+        db.execSQL(SENTENCIA_SQL_CREAR_TABLA_CATEGORIAS);
     }
     /**
      * Metodo publico para insertar una nuevo evento.
@@ -83,6 +86,17 @@ public class EventosSQLite extends SQLiteOpenHelper {
     }
 
     /**
+     * Metodo publico para insertar una nueva categoria.
+     */
+    public void insertarCategoria(Integer id_categoria, String titulo){
+        ContentValues valores = new ContentValues();
+        valores.put("id_categoria", id_categoria);
+        valores.put("title_categoria", titulo);
+        this.getWritableDatabase().insert("Categorias", null, valores);
+        System.out.println("Se inserta registro id " +id_categoria  +" title " +titulo);
+    }
+
+    /**
      * Metodo publico que cierra la base de datos.
      */
     public void cerrar(){
@@ -90,12 +104,12 @@ public class EventosSQLite extends SQLiteOpenHelper {
     }
 
     /**
-     * Metodo publico que devuelve todas los eventos
+     * Metodo publico que devuelve todas los eventos haciendo un join con categoria
      * @return un cursor con todos los eventos
      */
     public Cursor obtenerEventos(){
-        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
-        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, null, null, null, null,columnas[11]+" ASC");
+        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
+        Cursor cursor = this.getReadableDatabase().query("Eventos, Categorias", columnas, "thematic_id=id_categoria and (thematic_id=133 or thematic_id=134)", null, null, null,columnas[11]+" ASC");
 
         if(cursor != null) {
             cursor.moveToFirst();
@@ -108,9 +122,9 @@ public class EventosSQLite extends SQLiteOpenHelper {
      * @return un cursor con todos los eventos
      */
     public Cursor obtenerEventosPorNombre(String nombre){
-        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time"};
-        String[] condiciones = new String[]{"%"+nombre+"%"};
-        Cursor cursor = this.getReadableDatabase().query("Eventos", columnas, "title like ?", condiciones, null, null,columnas[11]+" ASC");
+        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
+        String[] condiciones = new String[]{"%"+nombre+"%", "%"+nombre+"%"};
+        Cursor cursor = this.getReadableDatabase().query("Eventos, Categorias", columnas, "thematic_id=id_categoria and (thematic_id=133 or thematic_id=134) and (title like ? or place like ?) ", condiciones, null, null,columnas[11]+" ASC");
 
         if(cursor != null) {
             cursor.moveToFirst();
@@ -118,4 +132,32 @@ public class EventosSQLite extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /**
+     * Metodo publico que devuelve todas los eventos de San Mateo Infantil haciendo un join con categoria
+     * @return un cursor con todos los eventos
+     */
+    public Cursor obtenerEventosInfantiles(){
+        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
+        Cursor cursor = this.getReadableDatabase().query("Eventos, Categorias", columnas, "thematic_id=id_categoria and thematic_id=134", null, null, null,columnas[11]+" ASC");
+
+        if(cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
+    /**
+     * Metodo publico que devuelve todas los eventos de San Mateo Infantil por Nombre
+     * @return un cursor con todos los eventos
+     */
+    public Cursor obtenerEventosPorNombreInfantil(String nombre){
+        String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
+        String[] condiciones = new String[]{"%"+nombre+"%", "%"+nombre+"%"};
+        Cursor cursor = this.getReadableDatabase().query("Eventos, Categorias", columnas, "thematic_id=id_categoria and thematic_id=134 and (title like ? or place like ?) ", condiciones, null, null,columnas[11]+" ASC");
+
+        if(cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
 }

@@ -209,6 +209,56 @@ public class Listado extends AppCompatActivity {
             };
 
             MyVolley.getInstance(this).addToRequestQueue(stringRequest);
+
+            //Realizamos una consulta al web service para traernos la información de las categorías
+            stringRequest = new StringRequest(Request.Method.GET, "https://testgestorlogrono.get-app.es/api/thematics",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Log.d("URL_CHECK_ENABLE_FORM", "Response:"+response);
+                            System.out.println("Respuesta categoría: " +response);
+                            //ArrayList<Evento> p = new ArrayList<>();
+                            try{
+                                //creamos un array JSON a partir de la cadena recibida
+                                JSONObject jobj = new JSONObject(response);
+                                if (jobj!=null){
+                                /*p = new Gson().fromJson(jarray.toString(), new TypeToken<List<Evento>>(){}.getType());*/
+                                    JSONArray jarray=(JSONArray) jobj.get("modified");
+                                    for (int i=0;i<jarray.length();i++){
+                                        JSONObject jobject = jarray.getJSONObject(i);
+                                        System.out.println("objeto categoria " +i +" id es: " +jobject.get("id"));
+                                        //insertamos en baseDatos
+                                        baseDatos.insertarCategoria(jobject.getInt("id"), jobject.getString("title"));
+                                    }
+                                }
+                            }
+                            catch(JSONException ex){
+                                ex.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    }) {
+                /*@Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Accept", "application/json");
+                    return params;
+                }*/
+                @Override
+                public Map getHeaders() throws AuthFailureError {
+                    Map headers = new HashMap<>();
+                    headers.put("Accept", "application/json");
+                    return headers;
+                }
+            };
+
+            MyVolley.getInstance(this).addToRequestQueue(stringRequest);
+
             recuperarEventos(mylistaEventos);
         }
     }
@@ -252,7 +302,8 @@ public class Listado extends AppCompatActivity {
                         cursor.getString(cursor.getColumnIndex("start_date")),
                         cursor.getString(cursor.getColumnIndex("finish_date")),
                         cursor.getString(cursor.getColumnIndex("start_time")),
-                        cursor.getString(cursor.getColumnIndex("finish_time")));
+                        cursor.getString(cursor.getColumnIndex("finish_time")),
+                        cursor.getString(cursor.getColumnIndex("title_categoria")));
                 eventosBD.add(evento);
                 System.out.println("En cursor recuperarEventos " +evento.getTitle() +"lat " +evento.getLat());
             }
@@ -331,6 +382,7 @@ public class Listado extends AppCompatActivity {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(searchItem);
+
         // Configure the search info and add any event listeners...
 
         //permite modificar el hint que el EditText muestra por defecto
@@ -340,12 +392,20 @@ public class Listado extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 //Toast.makeText(Listado.this, R.string.submitted, Toast.LENGTH_SHORT).show();
                 //se oculta el EditText
-                searchView.setQuery("", false);
-                searchView.setIconified(true);
-                searchItem.collapseActionView();
-                //System.out.println("query: " +query);
-                recuperarEventosPorNombre(query);
-                fragmentMapa.recargar();
+                if (query.equals("")){
+                    searchView.setIconified(true);
+                    searchItem.collapseActionView();
+                    recuperarEventos(mylistaEventos);
+                    fragmentMapa.recargar();
+                }
+                else {
+                    searchView.setQuery("", false);
+                    searchView.setIconified(true);
+                    searchItem.collapseActionView();
+                    //System.out.println("query: " +query);
+                    recuperarEventosPorNombre(query);
+                    fragmentMapa.recargar();
+                }
                 return true;
             }
             @Override
@@ -355,6 +415,7 @@ public class Listado extends AppCompatActivity {
                 fragmentMapa.recargar();
                 return true;
             }
+
         });
         return true;
     }
@@ -365,7 +426,10 @@ public class Listado extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        System.out.println("Hacemos click en boton con id " +id +" " +R.id.action_search);
+        if (id == R.id.action_search){
+            recuperarEventos(mylistaEventos);
+        }
         /*noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;

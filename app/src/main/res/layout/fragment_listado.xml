@@ -8,8 +8,10 @@
     <ListView
         android:id="@+id/lvListado"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="19dp"
-        android:clickable="false"/>
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:paddingBottom="80dip"
+        android:clipToPadding="false"/>
+
 
 </RelativeLayout>
