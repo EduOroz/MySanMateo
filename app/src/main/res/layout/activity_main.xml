@@ -5,32 +5,37 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorWhite"
+    android:titleTextColor="@color/colorMyRed"
+    android:textAlignment="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.cursologro.mysanmateo.MainActivity">
-
-    <TextView
-        android:text="FIESTAS SAN MATEO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/tvTituloPortada"
-        android:textSize="24sp"
-        android:textColor="@android:color/darker_gray" />
 
     <ListView
         android:id="@+id/lvPortada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivPortada" />
+        android:layout_below="@+id/ivPortada"
+        android:layout_marginTop="-30dp"
+        android:paddingBottom="60dip"
+        android:clipToPadding="false"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/portada"
         android:id="@+id/ivPortada"
-        android:layout_below="@+id/tvTituloPortada"/>
+        android:layout_below="@+id/tvPortada"/>
+
+    <TextView
+        android:id="@+id/tvPortada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/title_activity_MAIN"
+        android:textSize="25sp"
+        android:textColor="@color/colorMyRed"/>
 
 </RelativeLayout>

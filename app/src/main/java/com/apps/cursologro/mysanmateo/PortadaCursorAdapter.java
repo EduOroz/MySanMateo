@@ -46,7 +46,10 @@ public class PortadaCursorAdapter extends CursorAdapter {
 
         // Configuramos los estilos de los text fields
         Typeface faceLBold= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Bold.ttf");
+        Typeface faceLRegular= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Regular.ttf");
         tvTituloPortada.setTypeface(faceLBold);
+        tvSubtituloPortada.setTypeface(faceLRegular);
+        tvNumero.setTypeface(faceLBold);
 
         // Extract properties from cursor
         String title = cursor.getString(cursor.getColumnIndexOrThrow("titulo"));

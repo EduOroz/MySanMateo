@@ -2,6 +2,7 @@ package com.apps.cursologro.mysanmateo;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.hardware.camera2.params.BlackLevelPattern;
 import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -260,6 +262,10 @@ public class Listado extends AppCompatActivity {
                 (SearchView) MenuItemCompat.getActionView(searchItem);
 
         // Configure the search info and add any event listeners...
+
+        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchEditText.setTextColor(getResources().getColor(R.color.colorMyRed));
+        searchEditText.setHintTextColor(getResources().getColor(R.color.colorMyRed));
 
         //permite modificar el hint que el EditText muestra por defecto
         searchView.setQueryHint(getText(R.string.search));

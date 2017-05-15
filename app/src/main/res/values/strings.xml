@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MySanMateo</string>
-    <string name="title_activity_listado">Listado</string>
+    <string name="title_activity_MAIN">FIESTAS SAN MATEO</string>
+    <string name="title_activity_listado">PROGRAMA COMPLETO</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="action_search">Buscar...</string>

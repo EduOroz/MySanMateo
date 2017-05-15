@@ -55,10 +55,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Asignamos tipo de letra al título de la app
+        TextView tvPortada = (TextView) findViewById(R.id.tvPortada);
+        Typeface faceLHairline= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
+        tvPortada.setTypeface(faceLHairline);
+
         //Declaramos esta variable para poder acceder a sus métodos desde otras clases
         main = this;
 
         mylistaEventosPadre = (ListView) findViewById(R.id.lvPortada);
+        mylistaEventosPadre.setDividerHeight(40);
 
         //Instanciamos la BD
         baseDatos = new EventosSQLite(this);
@@ -174,8 +180,8 @@ public class MainActivity extends AppCompatActivity {
             MyVolley.getInstance(this).addToRequestQueue(stringRequest);
 
             //Creamos los 2 eventos especiales San Mateo y San Mateo Infantil
-            baseDatos.insertarEventosEspeciales("San Mateo", "San Mateo 2017", 22);
-            baseDatos.insertarEventosEspeciales("San Mateo Infantil", "San Mateo 2017", 12);
+            baseDatos.insertarEventosEspeciales("PROGRAMA DE FIESTAS COMPLETO", "San Mateo 2017", 22);
+            baseDatos.insertarEventosEspeciales("PROGRAMA INFANTIL ", "San Mateo 2017", 12);
         }
     }
 
