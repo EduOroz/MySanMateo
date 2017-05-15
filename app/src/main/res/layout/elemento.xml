@@ -33,7 +33,7 @@
 		android:layout_marginTop="20dp"
 		android:text="tvHora"
 		android:textColor="@color/colorPrimaryDark"
-		android:textSize="18sp" />
+		android:textSize="17sp" />
 
 	<TextView
 		android:id="@+id/tvCategoria"
@@ -44,7 +44,7 @@
 		android:layout_marginEnd="15dp"
 		android:text="tvCategoria"
 		android:textColor="@color/colorMyRed"
-		android:textSize="18sp" />
+		android:textSize="16sp" />
 
 	<TextView
 		android:id="@+id/tvTitulo"
@@ -57,7 +57,7 @@
 		android:paddingEnd="60dp"
 		android:text="tvTitulo"
 		android:textColor="@color/colorAccent"
-		android:textSize="18sp" />
+		android:textSize="17sp" />
 
 	<ImageView
 		android:id="@+id/imageView"
@@ -78,7 +78,7 @@
 		android:layout_marginTop="12dp"
 		android:text="tvLugar"
 		android:textColor="@color/colorAccent"
-		android:textSize="15sp" />
+		android:textSize="14sp" />
 
 	<TextView
 		android:id="@+id/tvDireccion"
@@ -88,7 +88,7 @@
 		android:layout_below="@+id/tvLugar"
 		android:text="tvDireccion"
 		android:textColor="@color/colorAccent"
-		android:textSize="15sp" />
+		android:textSize="14sp" />
 
 	<View
 		android:id="@+id/vLinea"

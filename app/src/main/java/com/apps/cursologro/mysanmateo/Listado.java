@@ -104,6 +104,13 @@ public class Listado extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false); //Ocultamos el título por defecto porque mostraremos el TextView
+
+        //Configuramos el tamaño y fuente del título del toolbar
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Typeface faceLLight= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
+        mTitle.setTypeface(faceLLight);
+
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
         // Enable the Up button
