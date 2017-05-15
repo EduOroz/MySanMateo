@@ -70,6 +70,13 @@ public class PortadaCursorAdapter extends CursorAdapter {
             }
         });
 
+        tvNumero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.main.moveToListado();
+            }
+        });
+
     }
 }
 

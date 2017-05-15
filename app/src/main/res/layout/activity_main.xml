@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    android:titleTextColor="@color/colorMyRed"
     android:textAlignment="center"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.cursologro.mysanmateo.MainActivity">
 
     <ListView
@@ -36,6 +34,6 @@
         android:layout_marginTop="20dp"
         android:text="@string/title_activity_MAIN"
         android:textSize="25sp"
-        android:textColor="@color/colorMyRed"/>
+        android:textColor="@color/colorAccent"/>
 
 </RelativeLayout>

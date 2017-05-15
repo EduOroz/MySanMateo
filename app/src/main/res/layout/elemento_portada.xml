@@ -16,7 +16,7 @@
 		android:layout_marginTop="30dp"
 		android:layout_marginStart="10dp"
 		android:text="tvTitulo"
-		android:textColor="@color/colorMyRed"
+		android:textColor="@color/colorAccent"
 		android:textSize="20sp" />
 
 	<TextView
@@ -29,7 +29,7 @@
 		android:layout_marginBottom="30dp"
 		android:paddingStart="10dp"
 		android:text="tvSubtitulo"
-		android:textColor="@color/colorMyRed"
+		android:textColor="@color/colorAccent"
 		android:textSize="15sp" />
 
 	<LinearLayout

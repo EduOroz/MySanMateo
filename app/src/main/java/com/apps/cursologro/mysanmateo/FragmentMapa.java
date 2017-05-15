@@ -15,6 +15,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -87,7 +88,7 @@ public class FragmentMapa extends Fragment {
 
                 for (Evento evento : eventosBD){
                     coords = new LatLng(evento.getLat(), evento.getLng());
-                    mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
+                    mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
 
                 }}
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 13.0f));
@@ -101,6 +102,7 @@ public class FragmentMapa extends Fragment {
         googleMap.clear();
         GoogleMap mMap = googleMap;
         LatLng coords = new LatLng(42.466676, -2.439315);
+        System.out.println("Ejecutamos FragmentMapa recargar");
 
         //Aplicamos el estilo personalizado de mapa
         googleMap.setMapStyle(
@@ -112,7 +114,7 @@ public class FragmentMapa extends Fragment {
 
         for (Evento evento : eventosBD){
             coords = new LatLng(evento.getLat(), evento.getLng());
-            mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
+            mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
 
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13.0f));
@@ -130,10 +132,10 @@ public class FragmentMapa extends Fragment {
             //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento);
             if (evento.getId().equals(id_evento)){
                 //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
-                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle())).showInfoWindow();
+                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red))).showInfoWindow();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 16.0f));
             } else {
-                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()));
+                mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
             }
         }
     }

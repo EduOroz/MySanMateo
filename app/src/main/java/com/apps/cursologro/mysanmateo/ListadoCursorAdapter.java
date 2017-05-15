@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,16 @@ public class ListadoCursorAdapter extends CursorAdapter {
         ImageView ivLocalizacion = (ImageView) view.findViewById(R.id.ivLocalizacion);
 
         // Configuramos los estilos de los text fields
-        Typeface faceLBold= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Bold.ttf");
-        tvDay.setTypeface(faceLBold);
+        Typeface faceRBold= Typeface.createFromAsset(context.getAssets(),"fonts/Roboto-Bold.ttf");
+        Typeface faceLLight= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Light.ttf");
+        Typeface faceLMedium= Typeface.createFromAsset(context.getAssets(),"fonts/Lato-Medium.ttf");
+        tvDay.setTypeface(faceLLight);
+        tvHour.setTypeface(faceLLight);
+        tvThematic.setTypeface(faceLLight);
+        tvTitle.setTypeface(faceRBold);
+        tvPlace.setTypeface(faceLMedium);
+        tvAddress.setTypeface(faceLLight);
+
 
         // Extract properties from cursor
         final Integer id_evento = cursor.getInt(cursor.getColumnIndexOrThrow("id_evento"));
@@ -77,9 +86,11 @@ public class ListadoCursorAdapter extends CursorAdapter {
         // Populate fields with extracted properties
         tvTitle.setText(title);
         tvPlace.setText(place);
+        tvPlace.setAllCaps(true);
         tvAddress.setText(address);
         //tvThematic.setText(""+idThematic);
         tvThematic.setText(titulo_categoria);
+        tvThematic.setAllCaps(true);
 
         //El icono de la url sólo se visualizará si hay campo url
         if (link.equals("")){
@@ -100,10 +111,10 @@ public class ListadoCursorAdapter extends CursorAdapter {
 
         //Para poner la hora revisamos si el comienzo y el fin es el mismo o no
         if (start_time.equals(finish_time)){
-            tvHour.setText(start_time);
+            tvHour.setText(start_time +" h");
         }
         else {
-            tvHour.setText(start_time +" - " +finish_time);
+            tvHour.setText(start_time +" h - " +finish_time +" h");
         }
 
         //Creamos un listener en el ivLocalización

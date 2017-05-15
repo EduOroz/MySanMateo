@@ -33,8 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorWhite"
-            app:tabTextColor="@color/colorMyRed"
-            app:tabSelectedTextColor="@color/colorMyRed">
+            app:tabTextColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/colorAccent">
 
         </android.support.design.widget.TabLayout>
 

@@ -2,6 +2,7 @@ package com.apps.cursologro.mysanmateo;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.hardware.camera2.params.BlackLevelPattern;
 import android.support.annotation.MainThread;
 import android.support.design.widget.FloatingActionButton;
@@ -24,7 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +90,6 @@ public class Listado extends AppCompatActivity {
 
     //Elementos para guardar los eventos que recogemos en el WS
     static Evento evento;
-    static ArrayList<Evento> eventos = new ArrayList<>();
     static ArrayList<Evento> eventosBD = new ArrayList<>();
 
     @Override
@@ -146,9 +148,23 @@ public class Listado extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        //Cambiamos el tipo de letra de los textos en el tab layout
+        Typeface faceLMedium= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Medium.ttf");
+        ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
+        int tabsCount = vg.getChildCount();
+        System.out.println("Intentamos cambiar el tipo de letra vg.getChildCount " +tabsCount);
+        for (int j = 0; j < tabsCount; j++) {
+            ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
+            int tabChildsCount = vgTab.getChildCount();
+            for (int i = 0; i < tabChildsCount; i++) {
+                View tabViewChild = vgTab.getChildAt(i);
+                if (tabViewChild instanceof TextView) {
+                    ((TextView) tabViewChild).setTypeface(faceLMedium);
+                }
+            }
+        }
+
         myContext = this;
-
-
     }
 
     /**
@@ -262,10 +278,13 @@ public class Listado extends AppCompatActivity {
                 (SearchView) MenuItemCompat.getActionView(searchItem);
 
         // Configure the search info and add any event listeners...
-
-        EditText searchEditText = (EditText) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchEditText.setTextColor(getResources().getColor(R.color.colorMyRed));
-        searchEditText.setHintTextColor(getResources().getColor(R.color.colorMyRed));
+        LinearLayout linearLayout1 = (LinearLayout) searchView.getChildAt(0);
+        LinearLayout linearLayout2 = (LinearLayout) linearLayout1.getChildAt(2);
+        LinearLayout linearLayout3 = (LinearLayout) linearLayout2.getChildAt(1);
+        AutoCompleteTextView autoComplete = (AutoCompleteTextView) linearLayout3.getChildAt(0);
+        autoComplete.setTextSize(20);
+        Typeface faceLItalic= Typeface.createFromAsset(myContext.getAssets(),"fonts/Lato-Italic.ttf");
+        autoComplete.setTypeface(faceLItalic);
 
         //permite modificar el hint que el EditText muestra por defecto
         searchView.setQueryHint(getText(R.string.search));
@@ -297,6 +316,8 @@ public class Listado extends AppCompatActivity {
                 fragmentMapa.recargar();
                 return true;
             }
+
+
 
         });
         return true;

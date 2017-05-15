@@ -5,36 +5,35 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:paddingBottom="10dp"
-	android:clickable="false">
+	android:clickable="false"
+	android:background="@color/colorPrimary">
 
 	<TextView
 		android:id="@+id/tvDia"
 		android:layout_width="100dp"
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentTop="true"
-		android:layout_marginLeft="10dp"
-		android:layout_marginTop="30dp"
+		android:layout_marginStart="10dp"
+		android:layout_marginTop="20dp"
 		android:background="@drawable/rounded_corner"
 		android:textColor="@color/colorWhite"
 		android:padding="5dp"
 		android:text="tvDia"
-		android:textSize="18dp"
+		android:textSize="18sp"
         android:textAlignment="center"/>
 
 	<TextView
 		android:id="@+id/tvHora"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true"
 		android:layout_alignParentStart="true"
 		android:layout_below="@+id/tvDia"
-		android:layout_marginLeft="10dp"
-		android:layout_marginTop="24dp"
+		android:layout_marginStart="15dp"
+		android:layout_marginTop="20dp"
 		android:text="tvHora"
 		android:textColor="@color/colorPrimaryDark"
-		android:textSize="18dp" />
+		android:textSize="18sp" />
 
 	<TextView
 		android:id="@+id/tvCategoria"
@@ -42,58 +41,54 @@
 		android:layout_height="wrap_content"
 		android:layout_alignBottom="@+id/tvHora"
 		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
-		android:layout_marginEnd="44dp"
-		android:layout_marginRight="44dp"
+		android:layout_marginEnd="15dp"
 		android:text="tvCategoria"
-		android:textColor="@color/colorPrimary"
-		android:textSize="18dp" />
+		android:textColor="@color/colorMyRed"
+		android:textSize="18sp" />
 
 	<TextView
 		android:id="@+id/tvTitulo"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_alignLeft="@+id/tvHora"
+		android:minHeight="40dp"
 		android:layout_alignStart="@+id/tvHora"
 		android:layout_below="@+id/tvHora"
-		android:layout_marginTop="11dp"
+		android:layout_marginTop="5dp"
+		android:paddingEnd="60dp"
 		android:text="tvTitulo"
 		android:textColor="@color/colorAccent"
-		android:textSize="18dp" />
+		android:textSize="18sp" />
 
 	<ImageView
 		android:id="@+id/imageView"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignLeft="@+id/tvTitulo"
 		android:layout_alignStart="@+id/tvTitulo"
 		android:layout_below="@+id/tvTitulo"
-		android:layout_marginTop="27dp"
+		android:layout_marginTop="15dp"
 		app:srcCompat="@drawable/location_small" />
 
 	<TextView
 		android:id="@+id/tvLugar"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignTop="@+id/imageView"
-		android:layout_toEndOf="@+id/imageView"
-		android:layout_toRightOf="@+id/imageView"
-		android:paddingLeft="10dp"
+		android:layout_alignStart="@+id/imageView"
+		android:layout_below="@id/tvTitulo"
+		android:layout_marginLeft="18dp"
+		android:layout_marginTop="12dp"
 		android:text="tvLugar"
 		android:textColor="@color/colorAccent"
-		android:textSize="15dp" />
+		android:textSize="15sp" />
 
 	<TextView
 		android:id="@+id/tvDireccion"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignLeft="@+id/tvLugar"
 		android:layout_alignStart="@+id/tvLugar"
 		android:layout_below="@+id/tvLugar"
-		android:paddingLeft="10dp"
 		android:text="tvDireccion"
 		android:textColor="@color/colorAccent"
-		android:textSize="15dp" />
+		android:textSize="15sp" />
 
 	<View
 		android:id="@+id/vLinea"
