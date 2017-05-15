@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvAplicacion"
+    <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="FIESTAS SAN MATEO"
-        android:textColor="@color/colorAccent"
-        android:textSize="24dp"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold" />
-
-    <com.felipecsl.gifimageview.library.GifImageView
-        android:id="@+id/gifImageView"
-        android:layout_marginTop="-30dp"
-        android:scaleType="fitCenter"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_marginTop="60dp"
+        app:srcCompat="@drawable/logotipo" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -30,5 +21,12 @@
         android:background ="@drawable/mipbstyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <com.felipecsl.gifimageview.library.GifImageView
+        android:id="@+id/gifImageView"
+        android:scaleType="center"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
