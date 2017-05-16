@@ -59,6 +59,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class Listado extends AppCompatActivity {
 
     public static Boolean infantil;
+    public static String linkWebView;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -417,14 +418,28 @@ public class Listado extends AppCompatActivity {
         }
     }
 
+    //Método para pasar el objeto eventosBD a otra actividad
     public ArrayList<Evento> getObjeto(){
         return eventosBD;
     }
+
+    //Métodos para navegar entre los distintos fragmentos
     public void cambiarMapa(){
         mViewPager.setCurrentItem(1);
     }
     public void cambiarListado(){
         mViewPager.setCurrentItem(0);
+    }
+
+    //Métodos para cambiar a la activity de visualización del WebView y pasar el objeto url
+    public void moveToWebView(String url){
+        System.out.println("Estamos en moveToWebView con url " +url);
+        this.linkWebView = url;
+        Intent intent = new Intent(this, WebViewActivity.class);
+        startActivity(intent);
+    }
+    public String getLinkWebView(){
+        return linkWebView;
     }
 
 }

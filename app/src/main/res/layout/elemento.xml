@@ -120,7 +120,6 @@
 		android:layout_marginTop="10dp"
 		android:layout_alignEnd="@+id/vLinea"
 		android:layout_alignRight="@+id/vLinea"
-
 		app:srcCompat="@drawable/location_button" />
 
 </RelativeLayout>

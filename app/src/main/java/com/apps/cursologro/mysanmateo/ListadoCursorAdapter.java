@@ -71,7 +71,7 @@ public class ListadoCursorAdapter extends CursorAdapter {
         String start_date = cursor.getString(cursor.getColumnIndexOrThrow("start_date"));
         String start_time = cursor.getString(cursor.getColumnIndexOrThrow("start_time"));
         String finish_time = cursor.getString(cursor.getColumnIndexOrThrow("finish_time"));
-        String link = cursor.getString(cursor.getColumnIndexOrThrow("link"));
+        final String link = cursor.getString(cursor.getColumnIndexOrThrow("link"));
 
         if (!cursor.isFirst()) {
             cursorCopy.moveToPrevious();
@@ -123,6 +123,14 @@ public class ListadoCursorAdapter extends CursorAdapter {
             public void onClick(View v) {
                Listado.fragmentMapa.mostrarEtiqueta(id_evento);
                Listado.listado.cambiarMapa();
+            }
+        });
+
+        ivWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("On Click ivWEB");
+                Listado.listado.moveToWebView(link);
             }
         });
 
