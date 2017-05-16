@@ -1,6 +1,7 @@
 package com.apps.cursologro.mysanmateo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.hardware.camera2.params.BlackLevelPattern;
@@ -57,6 +58,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Listado extends AppCompatActivity {
 
+    public static Boolean infantil;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -97,10 +100,15 @@ public class Listado extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado);
 
+        //Cargamos si estamos en un listado de san mateo infantil o completo
+        infantil = MainActivity.main.isInfantil();
+        System.out.println("Recuperamos el valor de infantil " +infantil);
+
         //Nos traemos la base de Datos abierta en MainActivty
-        baseDatos = MainActivity.main.getDB();
+        baseDatos = SplashScreen.splashScreen.getDB();
 
         listado = this;
+        myContext = this;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -110,6 +118,10 @@ public class Listado extends AppCompatActivity {
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         Typeface faceLLight= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
         mTitle.setTypeface(faceLLight);
+
+        if (infantil){
+            mTitle.setText("PROGRAMA INFANTIL");
+        }
 
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
@@ -155,7 +167,10 @@ public class Listado extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        //Cambiamos el tipo de letra de los textos en el tab layout
+        /**
+        * Cambiamos el tipo de letra de los textos en el tab layout desmontando el ViewGroup para
+        *  acceder a sus componentes
+        */
         Typeface faceLMedium= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Medium.ttf");
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
@@ -171,7 +186,6 @@ public class Listado extends AppCompatActivity {
             }
         }
 
-        myContext = this;
     }
 
     /**
@@ -181,9 +195,14 @@ public class Listado extends AppCompatActivity {
         String title;
         String place;
         eventosBD = new ArrayList<>();
+        Cursor cursor;
         try {
             // Devuelve todos los eventos en el objeto Cursor.
-            Cursor cursor = baseDatos.obtenerEventos();
+            if (!infantil) {
+                cursor = baseDatos.obtenerEventos();
+            } else {
+                cursor = baseDatos.obtenerEventosInfantiles();
+            }
             System.out.println("RE numero columnas en el cursor " +cursor.getColumnCount());
             System.out.println("RE numero resultados " +cursor.getCount());
 
@@ -234,9 +253,14 @@ public class Listado extends AppCompatActivity {
         String title;
         String place;
         eventosBD = new ArrayList<>();
+        Cursor cursor;
         try {
             // Devuelve todos los eventos en el objeto Cursor.
-            Cursor cursor = baseDatos.obtenerEventosPorNombre(nombre);
+            if (!infantil) {
+                cursor = baseDatos.obtenerEventosPorNombre(nombre);
+            } else {
+                cursor = baseDatos.obtenerEventosPorNombreInfantil(nombre);
+            }
             System.out.println("REN numero columnas en el cursor " +cursor.getColumnCount());
             System.out.println("REN numero resultados " +cursor.getCount());
 

@@ -38,10 +38,10 @@ public class PortadaCursorAdapter extends CursorAdapter {
 
         System.out.println("Estamos en bindView de PortadaCursorAdapter");
         // Find fields to populate in inflated template
-        TextView tvTituloPortada = (TextView) view.findViewById(R.id.tvTituloPortada);
-        TextView tvSubtituloPortada = (TextView) view.findViewById(R.id.tvSubtituloPortada);
-        TextView tvNumero = (TextView) view.findViewById(R.id.tvNumero);
-        ImageButton ibAListado = (ImageButton) view.findViewById(R.id.ibAListado);
+        final TextView tvTituloPortada = (TextView) view.findViewById(R.id.tvTituloPortada);
+        final TextView tvSubtituloPortada = (TextView) view.findViewById(R.id.tvSubtituloPortada);
+        final TextView tvNumero = (TextView) view.findViewById(R.id.tvNumero);
+        final ImageButton ibAListado = (ImageButton) view.findViewById(R.id.ibAListado);
 
 
         // Configuramos los estilos de los text fields
@@ -66,14 +66,33 @@ public class PortadaCursorAdapter extends CursorAdapter {
         ibAListado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.main.moveToListado();
+                if (tvTituloPortada.getText().equals("San Mateo")){
+                    MainActivity.main.moveToListado(false);}
+                else {
+                    MainActivity.main.moveToListado(true);
+                }
             }
         });
 
         tvNumero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.main.moveToListado();
+                if (tvTituloPortada.getText().equals("San Mateo")){
+                    MainActivity.main.moveToListado(false);}
+                else {
+                    MainActivity.main.moveToListado(true);
+                }
+            }
+        });
+
+       view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvTituloPortada.getText().equals("San Mateo")){
+                    MainActivity.main.moveToListado(false);}
+                else {
+                    MainActivity.main.moveToListado(true);
+                }
             }
         });
 
