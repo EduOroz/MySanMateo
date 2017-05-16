@@ -66,10 +66,10 @@ public class PortadaCursorAdapter extends CursorAdapter {
         ibAListado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvTituloPortada.getText().equals("San Mateo")){
-                    MainActivity.main.moveToListado(false);}
+                if (tvTituloPortada.getText().equals("PROGRAMA INFANTIL ")){
+                    MainActivity.main.moveToListado(true);}
                 else {
-                    MainActivity.main.moveToListado(true);
+                    MainActivity.main.moveToListado(false);
                 }
             }
         });
@@ -77,10 +77,10 @@ public class PortadaCursorAdapter extends CursorAdapter {
         tvNumero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvTituloPortada.getText().equals("San Mateo")){
-                    MainActivity.main.moveToListado(false);}
+                if (tvTituloPortada.getText().equals("PROGRAMA INFANTIL ")){
+                    MainActivity.main.moveToListado(true);}
                 else {
-                    MainActivity.main.moveToListado(true);
+                    MainActivity.main.moveToListado(false);
                 }
             }
         });
@@ -88,10 +88,10 @@ public class PortadaCursorAdapter extends CursorAdapter {
        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvTituloPortada.getText().equals("San Mateo")){
-                    MainActivity.main.moveToListado(false);}
+                if (tvTituloPortada.getText().equals("PROGRAMA INFANTIL ")){
+                    MainActivity.main.moveToListado(true);}
                 else {
-                    MainActivity.main.moveToListado(true);
+                    MainActivity.main.moveToListado(false);
                 }
             }
         });

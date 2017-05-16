@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 /**
  * Created by Edu on 08/05/2017.
@@ -103,13 +104,28 @@ public class EventosSQLite extends SQLiteOpenHelper {
     /**
      * Metodo publico para insertar eventos especiales
      */
-    public void insertarEventosEspeciales(String titulo, String subtitulo, Integer cantidad){
+    public void insertarEventosEspeciales(String titulo, String subtitulo, Integer tematica){
+
+        long count;
+
         ContentValues valores = new ContentValues();
         valores.put("titulo", titulo);
         valores.put("subtitulo", subtitulo);
-        valores.put("cantidad", cantidad);
+
+        //Contamos cuantos eventos hay del tipo indicado
+        if (tematica==134){
+            SQLiteStatement s = this.getReadableDatabase().compileStatement( "select count(*) from eventos where thematic_id='" +tematica +"';");
+            count = s.simpleQueryForLong();
+            System.out.println("Número de eventos infantiles " +count);
+        } else {
+            SQLiteStatement s = this.getReadableDatabase().compileStatement( "select count(*) from eventos where (thematic_id=133 or thematic_id=134);");
+            count = s.simpleQueryForLong();
+            System.out.println("Número de eventos totales " +count);
+        }
+
+        valores.put("cantidad", count);
         this.getWritableDatabase().insert("EventosEspeciales", null, valores);
-        System.out.println("Se inserta evento especial " +titulo  +" cantidad " +cantidad);
+        System.out.println("Se inserta evento especial " +titulo  +" cantidad " +count);
     }
 
     /**
@@ -191,4 +207,5 @@ public class EventosSQLite extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
 }
