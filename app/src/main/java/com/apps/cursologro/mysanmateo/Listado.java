@@ -419,6 +419,15 @@ public class Listado extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mViewPager.getCurrentItem()==1){
+            mViewPager.setCurrentItem(0);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     //Método para pasar el objeto eventosBD a otra actividad
     public ArrayList<Evento> getObjeto(){
         return eventosBD;
