@@ -89,7 +89,7 @@ public class FragmentMapa extends Fragment {
                 for (Evento evento : eventosBD){
                     coords = new LatLng(evento.getLat(), evento.getLng());
                     mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
-                    mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), evento, getContext()));
+                    mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
 
                 }}
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 13.0f));
@@ -117,7 +117,7 @@ public class FragmentMapa extends Fragment {
         for (Evento evento : eventosBD){
             coords = new LatLng(evento.getLat(), evento.getLng());
             mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
-
+            mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13.0f));
 
@@ -131,13 +131,14 @@ public class FragmentMapa extends Fragment {
 
         for (Evento evento : eventosBD){
             coords = new LatLng(evento.getLat(), evento.getLng());
-            //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento);
             if (evento.getId().equals(id_evento)){
-                //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
+                System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
                 mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red))).showInfoWindow();
+                mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 16.0f));
             } else {
                 mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
+                mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
             }
         }
     }
