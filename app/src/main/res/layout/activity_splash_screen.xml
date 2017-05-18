@@ -14,20 +14,23 @@
         android:layout_marginTop="60dp"
         app:srcCompat="@drawable/logotipo" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:background ="@drawable/mipbstyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <com.felipecsl.gifimageview.library.GifImageView
         android:id="@+id/gifImageView"
-        android:scaleType="center"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/imageView3"
         android:layout_marginTop="100dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/tvSplashScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/colorMyRed"
+        android:text="Desarrollado por Eduardo, Ruben y Sheila" />
 
 </RelativeLayout>

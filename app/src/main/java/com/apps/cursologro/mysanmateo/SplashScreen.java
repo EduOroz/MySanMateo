@@ -2,10 +2,12 @@ package com.apps.cursologro.mysanmateo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import com.android.volley.AuthFailureError;
@@ -65,8 +67,12 @@ public class SplashScreen extends AppCompatActivity {
         baseDatos = new EventosSQLite(this);
 
         gifImageView = (GifImageView)findViewById(R.id.gifImageView);
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setVisibility(progressBar.VISIBLE);
+        /*progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setVisibility(progressBar.VISIBLE);*/
+
+        TextView tvSplashScreen= (TextView) findViewById(R.id.tvSplashScreen);
+        Typeface faceLLight= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
+        tvSplashScreen.setTypeface(faceLLight);
 
         // Establece el recurso GIFImageView
         try{

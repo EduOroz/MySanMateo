@@ -20,9 +20,10 @@ public class WebViewActivity extends AppCompatActivity {
 
         WebView myWebView = (WebView) this.findViewById(R.id.webView);
         String url = Listado.listado.getLinkWebView();
+        System.out.println("La url ha mostrar es " +url);
         myWebView.setWebViewClient(new WebViewClient());
         myWebView.loadUrl(url);
-        //myWebView.loadUrl("https://google.es");
+        //myWebView.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url="+url);
 
     }
 

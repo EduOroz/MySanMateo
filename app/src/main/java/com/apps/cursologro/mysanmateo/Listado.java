@@ -280,7 +280,8 @@ public class Listado extends AppCompatActivity {
                         cursor.getString(cursor.getColumnIndex("start_date")),
                         cursor.getString(cursor.getColumnIndex("finish_date")),
                         cursor.getString(cursor.getColumnIndex("start_time")),
-                        cursor.getString(cursor.getColumnIndex("finish_time")));
+                        cursor.getString(cursor.getColumnIndex("finish_time")),
+                        cursor.getString(cursor.getColumnIndex("title_categoria")));
                 eventosBD.add(evento);
                 System.out.println("En cursor recuperarEventosPorNombre " +evento.getTitle() +"lat " +evento.getLat());
             }
