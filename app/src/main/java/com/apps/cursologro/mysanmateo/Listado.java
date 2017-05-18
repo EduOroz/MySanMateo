@@ -58,6 +58,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Listado extends AppCompatActivity {
 
+    //Utilizaremos la variable infantil para controlar si estamos en el programa completo o infantil
     public static Boolean infantil;
     public static String linkWebView;
 
@@ -77,8 +78,8 @@ public class Listado extends AppCompatActivity {
     private ViewPager mViewPager;
 
     /**
-     * Creamos este objeto para pasar el array al otro fragmento, lo inicializaremos en onCreate
-     * y luego crearemos un método público que nos devuelva el objeto getObjecto()
+     * Creamos este objeto para pasar el array de eventos entre fragmentos, lo inicializaremos
+     * en onCreate y luego crearemos un método público que nos devuelva el objeto getObjecto()
      */
     public static Listado listado;
 
@@ -120,6 +121,7 @@ public class Listado extends AppCompatActivity {
         Typeface faceLLight= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
         mTitle.setTypeface(faceLLight);
 
+        //Asignamos título PROGRAMA INFANTIL en vez del por defecto PROGRAMA COMPLETO si aplica
         if (infantil){
             mTitle.setText("PROGRAMA INFANTIL");
         }
@@ -139,7 +141,7 @@ public class Listado extends AppCompatActivity {
         fragmentLista = new FragmentLista();
         fragmentMapa = new FragmentMapa();
 
-        //Creamos un listener para controlar cuando cambiemos de ventana en la actividad
+        /*Creamos un listener para controlar cuando cambiemos de ventana en la actividad
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -162,20 +164,20 @@ public class Listado extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
                 System.out.println("onPageScrollStateChanged estamos en state: " +state);
             }
-        });
+        });*/
 
-        //Cargamos el elemento para mostrar la sección en la que estamos
+        //Cargamos el elemento tablayout para mostrar la sección en la que estamos
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
         /**
         * Cambiamos el tipo de letra de los textos en el tab layout desmontando el ViewGroup para
-        *  acceder a sus componentes
+        * acceder a sus componentes
         */
         Typeface faceLMedium= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Medium.ttf");
         ViewGroup vg = (ViewGroup) tabLayout.getChildAt(0);
         int tabsCount = vg.getChildCount();
-        System.out.println("Intentamos cambiar el tipo de letra vg.getChildCount " +tabsCount);
+        //System.out.println("Intentamos cambiar el tipo de letra vg.getChildCount " +tabsCount);
         for (int j = 0; j < tabsCount; j++) {
             ViewGroup vgTab = (ViewGroup) vg.getChildAt(j);
             int tabChildsCount = vgTab.getChildCount();
@@ -226,15 +228,12 @@ public class Listado extends AppCompatActivity {
                         cursor.getString(cursor.getColumnIndex("finish_time")),
                         cursor.getString(cursor.getColumnIndex("title_categoria")));
                 eventosBD.add(evento);
-                System.out.println("En cursor recuperarEventos " +evento.getTitle() +"lat " +evento.getLat());
+                //System.out.println("En cursor recuperarEventos " +evento.getTitle() +"lat " +evento.getLat());
             }
-
-            // Find ListView to populate -> Variable global listaEventos
 
             // Setup cursor adapter using cursor from last step
             ListadoCursorAdapter todoAdapter = new ListadoCursorAdapter(myContext, cursor);
             // Attach cursor adapter to the ListView
-            System.out.println("ID de listaEventos en recuperar: " +R.id.lvListado);
             mylistaEventos = listaEventos;
             listaEventos.setAdapter(todoAdapter);
 
@@ -248,7 +247,8 @@ public class Listado extends AppCompatActivity {
     }
 
     /**
-     * Metodo privado que recupera los eventos de nombre like '%%' existentes de la base de datos.
+     * Metodo privado que recupera los eventos de nombre o lugar like '%%'
+     * existentes de la base de datos.
      */
     static void recuperarEventosPorNombre(String nombre) {
         String title;
@@ -283,9 +283,8 @@ public class Listado extends AppCompatActivity {
                         cursor.getString(cursor.getColumnIndex("finish_time")),
                         cursor.getString(cursor.getColumnIndex("title_categoria")));
                 eventosBD.add(evento);
-                System.out.println("En cursor recuperarEventosPorNombre " +evento.getTitle() +"lat " +evento.getLat());
+                //System.out.println("En cursor recuperarEventosPorNombre " +evento.getTitle() +"lat " +evento.getLat());
             }
-            // Find ListView to populate -> Variable global listaEventos
 
             // Setup cursor adapter using cursor from last step
             ListadoCursorAdapter todoAdapter = new ListadoCursorAdapter(myContext, cursor);
@@ -336,22 +335,22 @@ public class Listado extends AppCompatActivity {
                     searchView.setQuery("", false);
                     searchView.setIconified(true);
                     searchItem.collapseActionView();
-                    //System.out.println("query: " +query);
                     recuperarEventosPorNombre(query);
                     fragmentMapa.recargar();
                 }
                 return true;
             }
+
+            /**
+             * Según se vaya escribiendo en el buscador realizaremos la búsqueda de los eventos
+             * que coincidan y los mostraremos
+             */
             @Override
             public boolean onQueryTextChange(String newText) {
-                //textView.setText(newText);
                 recuperarEventosPorNombre(newText);
                 fragmentMapa.recargar();
                 return true;
             }
-
-
-
         });
         return true;
     }
@@ -425,6 +424,10 @@ public class Listado extends AppCompatActivity {
         }
     }
 
+    /*
+    * Sobreescribimos el método onBackPressed para controlar que si estamos en el fragment del mapa
+    * pasemos a visualizar el fragment listado antes de cambiar a la actividad anterior
+    */
     @Override
     public void onBackPressed() {
         if (mViewPager.getCurrentItem()==1){

@@ -98,7 +98,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
         valores.put("id_categoria", id_categoria);
         valores.put("title_categoria", titulo);
         this.getWritableDatabase().insert("Categorias", null, valores);
-        System.out.println("Se inserta registro id " +id_categoria  +" title " +titulo);
+        System.out.println("Se inserta categoría id " +id_categoria  +" title " +titulo);
     }
 
     /**
@@ -151,7 +151,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
 
     /**
      * Metodo publico que devuelve todas los eventos por Nombre
-     * @return un cursor con todos los eventos
+     * @return un cursor con todos los eventos filtrando por nombre o lugar
      */
     public Cursor obtenerEventosPorNombre(String nombre){
         String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
@@ -166,7 +166,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
 
     /**
      * Metodo publico que devuelve todas los eventos de San Mateo Infantil haciendo un join con categoria
-     * @return un cursor con todos los eventos
+     * @return un cursor con todos los eventos infantiles
      */
     public Cursor obtenerEventosInfantiles(){
         String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};
@@ -180,7 +180,7 @@ public class EventosSQLite extends SQLiteOpenHelper {
 
     /**
      * Metodo publico que devuelve todas los eventos de San Mateo Infantil por Nombre
-     * @return un cursor con todos los eventos
+     * @return un cursor con todos los eventos infantiles aplicando filtro por nombre o lugar
      */
     public Cursor obtenerEventosPorNombreInfantil(String nombre){
         String[] columnas = new String[]{"_id", "id_evento", "title", "place", "thematic_id", "text", "publication_date", "link", "address", "lat", "lng", "start_date", "finish_date", "start_time", "finish_time", "title_categoria"};

@@ -24,6 +24,7 @@ public class Evento {
     //Constructores
     public Evento(){}
 
+    //Constructor sin titulo_categoría para cuando recogemos inforamación directamente del WS
     public Evento(Integer id, String place, Integer thematic_id, String title, String text, String publication_date, String link, String address, Double lat, Double lng, String start_date, String finish_date, String start_time, String finish_time) {
         this.id = id;
         this.place = place;
@@ -42,6 +43,7 @@ public class Evento {
         this.titulo_categoria = "none";
     }
 
+    //Constructor completo
     public Evento(Integer id, String place, Integer thematic_id, String title, String text, String publication_date, String link, String address, Double lat, Double lng, String start_date, String finish_date, String start_time, String finish_time, String titulo_categoria) {
         this.id = id;
         this.place = place;

@@ -2,27 +2,21 @@ package com.apps.cursologro.mysanmateo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.ViewGroup;;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Edu on 09/05/2017.
@@ -81,17 +75,20 @@ public class FragmentMapa extends Fragment {
 
                 eventosBD = Listado.listado.getObjeto();
                 if (eventosBD.size()!=0){
-                System.out.println("Estamos cargando el mapa " +eventosBD.get(0).getTitle());
+                    System.out.println("Estamos cargando el mapa " +eventosBD.get(0).getTitle());
 
                 // For showing a move to my location button
                 //googleMap.setMyLocationEnabled(true);
 
-                for (Evento evento : eventosBD){
-                    coords = new LatLng(evento.getLat(), evento.getLng());
-                    mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
-                    mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
-
-                }}
+                    /* A cada uno de los eventos a mostrar le asignamos un marcador
+                    * y una ventana de información personalizada
+                     */
+                    for (Evento evento : eventosBD){
+                        coords = new LatLng(evento.getLat(), evento.getLng());
+                        mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red)));
+                        mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
+                    }
+                }
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(center, 13.0f));
 
             }
@@ -100,11 +97,12 @@ public class FragmentMapa extends Fragment {
         return rootView;
     }
 
+    //Método para recargar  los marcadores del mapa cuando realizamos un filtrado por nombre o lugar
     public void recargar(){
         googleMap.clear();
         GoogleMap mMap = googleMap;
         LatLng coords = new LatLng(42.466676, -2.439315);
-        System.out.println("Ejecutamos FragmentMapa recargar");
+        System.out.println("Ejecutamos en FragmentMapa recargar");
 
         //Aplicamos el estilo personalizado de mapa
         googleMap.setMapStyle(
@@ -112,7 +110,6 @@ public class FragmentMapa extends Fragment {
                         getContext(), R.raw.formato_mapa));
 
         eventosBD = Listado.listado.getObjeto();
-        System.out.println("Estamos recargando el mapa con " +eventosBD.size());
 
         for (Evento evento : eventosBD){
             coords = new LatLng(evento.getLat(), evento.getLng());
@@ -120,9 +117,9 @@ public class FragmentMapa extends Fragment {
             mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
         }
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 13.0f));
-
     }
 
+    //Método para mostrar una etiqueta concreta del mapa al pinchar en el icono de localización del listado
     public void mostrarEtiqueta(Integer id_evento){
         System.out.println("Intentamos mostrar la etiqueta del evento " +id_evento);
         GoogleMap mMap = googleMap;
@@ -132,7 +129,7 @@ public class FragmentMapa extends Fragment {
         for (Evento evento : eventosBD){
             coords = new LatLng(evento.getLat(), evento.getLng());
             if (evento.getId().equals(id_evento)){
-                System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
+                //System.out.println("Intentamos comparar " +evento.getId() +" con " +id_evento +" OK");
                 mMap.addMarker(new MarkerOptions().position(coords).title(evento.getTitle()).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_map_red))).showInfoWindow();
                 mMap.setInfoWindowAdapter(new CustomInfoWindow(getActivity().getLayoutInflater(), getContext()));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coords, 16.0f));

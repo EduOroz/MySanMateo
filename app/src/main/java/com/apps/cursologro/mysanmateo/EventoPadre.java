@@ -9,6 +9,7 @@ public class EventoPadre {
     String descripcion;
     Integer cantidad;
 
+    //Constructores
     public EventoPadre() {
 
     }
@@ -19,6 +20,7 @@ public class EventoPadre {
         this.cantidad = cantidad;
     }
 
+    //Getters and Setters
     public String getTitulo() {
         return titulo;
     }

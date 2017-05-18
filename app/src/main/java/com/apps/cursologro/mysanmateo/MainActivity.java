@@ -2,12 +2,9 @@ package com.apps.cursologro.mysanmateo;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         recuperarEventosEspeciales();
-        //moveToListado();
         super.onResume();
     }
 
@@ -74,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
             //Recorremos el cursor y guardamos los eventos en evetosPadreBD
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 titulo = cursor.getString(cursor.getColumnIndex("titulo"));
-                System.out.println("Elemento del cursor titulo " +cursor.getString(cursor.getColumnIndex("titulo")));
+                //System.out.println("Elemento del cursor titulo " +cursor.getString(cursor.getColumnIndex("titulo")));
                 descripcion = cursor.getString(cursor.getColumnIndex("subtitulo"));
                 cantidad = cursor.getInt(cursor.getColumnIndex("cantidad"));
                 eventoPadre = new EventoPadre(titulo, descripcion, cantidad);
                 eventosPadreBD.add(eventoPadre);
-                System.out.println("En cursor recuperarEventosPadre " +eventoPadre.getTitulo());
+                //System.out.println("En cursor recuperarEventosPadre " +eventoPadre.getTitulo());
             }
 
             System.out.println("Tras crear eventosPadre cargamos el adaptador");

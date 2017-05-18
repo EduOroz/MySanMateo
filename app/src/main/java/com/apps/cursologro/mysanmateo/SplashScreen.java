@@ -1,6 +1,5 @@
 package com.apps.cursologro.mysanmateo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -32,7 +31,6 @@ import java.util.Map;
 public class SplashScreen extends AppCompatActivity {
 
     private GifImageView gifImageView;
-    private ProgressBar progressBar;
 
     //Elementos para guardar los eventos que recogemos en el WS
     static Evento evento;
@@ -67,8 +65,6 @@ public class SplashScreen extends AppCompatActivity {
         baseDatos = new EventosSQLite(this);
 
         gifImageView = (GifImageView)findViewById(R.id.gifImageView);
-        /*progressBar = (ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setVisibility(progressBar.VISIBLE);*/
 
         TextView tvSplashScreen= (TextView) findViewById(R.id.tvSplashScreen);
         Typeface faceLLight= Typeface.createFromAsset(this.getAssets(),"fonts/Lato-Light.ttf");
@@ -119,7 +115,7 @@ public class SplashScreen extends AppCompatActivity {
                                         //insertamos en baseDatos
                                         baseDatos.insertarEvento(evento);
                                     }
-                                    System.out.println("eventos 0 place: " + eventos.get(0).getPlace());
+                                    //System.out.println("eventos 0 place: " + eventos.get(0).getPlace());
 
                                 }
                             } catch (JSONException ex) {

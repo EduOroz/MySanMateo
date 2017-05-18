@@ -1,18 +1,15 @@
 package com.apps.cursologro.mysanmateo;
 
-import android.app.FragmentManager;
+
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Edu on 08/05/2017.
@@ -21,7 +18,7 @@ import android.widget.Toast;
 public class ListadoCursorAdapter extends CursorAdapter {
     public ListadoCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
-        System.out.println("Creando ListadoCursorAdapter");
+        //System.out.println("Creando ListadoCursorAdapter");
     }
 
     // The newView method is used to inflate a new view and return it,
@@ -73,6 +70,7 @@ public class ListadoCursorAdapter extends CursorAdapter {
         String finish_time = cursor.getString(cursor.getColumnIndexOrThrow("finish_time"));
         final String link = cursor.getString(cursor.getColumnIndexOrThrow("link"));
 
+        //Creamos un cursor copy para poder comparar un evento con su elemento anterior
         if (!cursor.isFirst()) {
             cursorCopy.moveToPrevious();
             dia_anterior = cursorCopy.getString(cursor.getColumnIndexOrThrow("start_date"));
@@ -80,8 +78,8 @@ public class ListadoCursorAdapter extends CursorAdapter {
             dia_anterior="2999";
         }
 
-        System.out.println("cursor title " +title +" " +start_date);
-        System.out.println("cursorCopy title " +cursorCopy.getString(cursorCopy.getColumnIndexOrThrow("title")) +" " +dia_anterior);
+        //System.out.println("cursor title " +title +" " +start_date);
+        //System.out.println("cursorCopy title " +cursorCopy.getString(cursorCopy.getColumnIndexOrThrow("title")) +" " +dia_anterior);
 
         // Populate fields with extracted properties
         tvTitle.setText(title);
@@ -102,9 +100,9 @@ public class ListadoCursorAdapter extends CursorAdapter {
         //El elemento día sólo se visualizará en el primer evento del día
         if (start_date.equals(dia_anterior)) {
             tvDay.setVisibility(View.GONE);
-            System.out.println("Mismo día");
+            //System.out.println("Mismo día");
         } else {
-            System.out.println("Ponemos el Día " +start_date.substring(8, 10));
+            //System.out.println("Ponemos el Día " +start_date.substring(8, 10));
             tvDay.setVisibility(View.VISIBLE);
             tvDay.setText("Día " +start_date.substring(8, 10));
         }
@@ -129,7 +127,7 @@ public class ListadoCursorAdapter extends CursorAdapter {
         ivWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("On Click ivWEB");
+                //System.out.println("On Click ivWEB");
                 Listado.listado.moveToWebView(link);
             }
         });

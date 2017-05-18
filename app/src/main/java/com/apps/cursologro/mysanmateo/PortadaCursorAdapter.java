@@ -20,7 +20,7 @@ public class PortadaCursorAdapter extends CursorAdapter {
 
     public PortadaCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
-        System.out.println("Constructor de PortadaCursorAdapter");
+        //System.out.println("Constructor de PortadaCursorAdapter");
     }
 
     // The newView method is used to inflate a new view and return it,
@@ -56,7 +56,8 @@ public class PortadaCursorAdapter extends CursorAdapter {
         String subtitle = cursor.getString(cursor.getColumnIndexOrThrow("subtitulo"));
         Integer num = cursor.getInt(cursor.getColumnIndexOrThrow("cantidad"));
 
-        System.out.println("Los datos del cursor son " +title +" " +subtitle +" " +num);
+        //System.out.println("Los datos del cursor son " +title +" " +subtitle +" " +num);
+
         // Populate fields with extracted properties
         tvTituloPortada.setText(title);
         tvSubtituloPortada.setText(subtitle);
