@@ -366,6 +366,12 @@ public class Listado extends AppCompatActivity {
         if (id == R.id.action_search){
             recuperarEventos(mylistaEventos);
         }
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
         /*noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
