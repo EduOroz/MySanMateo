@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MySanMateo</string>
-    <string name="app_title">San Mateo 4U</string>
+    <string name="app_title">MateoFest</string>
     <string name="title_activity_MAIN">FIESTAS SAN MATEO</string>
     <string name="title_activity_listado">PROGRAMA COMPLETO</string>
     <string name="action_settings">Settings</string>

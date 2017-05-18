@@ -1,8 +1,10 @@
 package com.apps.cursologro.mysanmateo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity main;
+    public static ProgressDialog progressDialog;
 
     public boolean infantil;
 
@@ -93,11 +96,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Función para cambiar a la actividad de Listado
+     * Función para cambiar a la actividad de Listado le añadimos un progressDialog para que
+     * mientras se carguen los datos el usuario sepa que la aplicación no se ha colgado
      */
     public void moveToListado (Boolean infantil){
-        Intent intent = new Intent(getBaseContext(), Listado.class);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.custom_progressdialog);
+        progressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         this.infantil = infantil;
+        Intent intent = new Intent(getBaseContext(), Listado.class);
         startActivity(intent);
     }
 

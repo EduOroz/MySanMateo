@@ -56,6 +56,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static com.apps.cursologro.mysanmateo.MainActivity.progressDialog;
+
 public class Listado extends AppCompatActivity {
 
     //Utilizaremos la variable infantil para controlar si estamos en el programa completo o infantil
@@ -187,6 +189,11 @@ public class Listado extends AppCompatActivity {
                     ((TextView) tabViewChild).setTypeface(faceLMedium);
                 }
             }
+        }
+
+        //Cerramos el progressDialog una vez hemos terminado de cargar la página Listado
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
 
     }
