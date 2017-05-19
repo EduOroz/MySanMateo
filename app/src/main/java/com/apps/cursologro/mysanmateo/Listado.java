@@ -18,6 +18,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -92,6 +94,10 @@ public class Listado extends AppCompatActivity {
     public static ListView mylistaEventos;
     static Context myContext;
 
+    //Elementos para manejar el RecycleView
+    private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLinearLayoutManager;
+
     //Variables para la conexión a BD
     static EventosSQLite baseDatos;
 
@@ -103,6 +109,11 @@ public class Listado extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado);
+
+        //Cargamos el recycle view y asignamos los componentes
+        mRecyclerView = (RecyclerView) findViewById(R.id.rvListado);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         //Cargamos si estamos en un listado de san mateo infantil o completo
         infantil = MainActivity.main.isInfantil();
